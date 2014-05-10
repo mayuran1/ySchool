@@ -21,6 +21,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.proxy.HibernateProxy;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomStudent;
+import org.yarlithub.yschool.repository.model.obj.yschool.Marks;
+import org.yarlithub.yschool.repository.model.obj.yschool.Results;
+import org.yarlithub.yschool.repository.model.obj.yschool.StudentGeneralexamProfile;
+import org.yarlithub.yschool.repository.model.obj.yschool.StudentSync;
 import org.yarlithub.yschool.repository.model.obj.yschool.iface.IStudent;
 
 
@@ -34,7 +39,7 @@ import org.yarlithub.yschool.repository.model.obj.yschool.iface.IStudent;
 public class Student implements Cloneable, Serializable, IPojoGenEntity, IStudent {
 
 	/** Serial Version UID. */
-	private static final long serialVersionUID = -559009377L;
+	private static final long serialVersionUID = -558977411L;
 
 	/** Use a WeakHashMap so entries will be garbage collected once all entities 
 		referring to a saved hash are garbage collected themselves. */
@@ -46,11 +51,11 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 	
 
 	/** Field mapping. */
-	private String addmisionNo;
-	/** Field mapping. */
 	private String address;
 	/** Field mapping. */
-	private Set<ClassStudent> classStudents = new HashSet<ClassStudent>();
+	private String admissionNo;
+	/** Field mapping. */
+	private Set<ClassroomStudent> classroomStudents = new HashSet<ClassroomStudent>();
 
 	/** Field mapping. */
 	private Date dob;
@@ -64,11 +69,22 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 	private Set<Marks> markss = new HashSet<Marks>();
 
 	/** Field mapping. */
+	private Date modifiedTime;
+	/** Field mapping. */
 	private String name;
 	/** Field mapping. */
 	private String nameWtInitial;
 	/** Field mapping. */
 	private Byte[] photo;
+	/** Field mapping. */
+	private Set<Results> resultss = new HashSet<Results>();
+
+	/** Field mapping. */
+	private Set<StudentGeneralexamProfile> studentGeneralexamProfiles = new HashSet<StudentGeneralexamProfile>();
+
+	/** Field mapping. */
+	private Set<StudentSync> studentSyncs = new HashSet<StudentSync>();
+
 	/**
 	 * Default constructor, mainly for hibernate use.
 	 */
@@ -84,14 +100,17 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 	}
 	
 	/** Constructor taking a given ID.
-	 * @param addmisionNo String object;
+	 * @param admissionNo String object;
 	 * @param id Integer object;
+	 * @param modifiedTime Date object;
 	 * @param name String object;
 	 */
-	public Student(String addmisionNo, Integer id, String name) {
+	public Student(String admissionNo, Integer id, Date modifiedTime, 					
+			String name) {
 
-		this.addmisionNo = addmisionNo;
+		this.admissionNo = admissionNo;
 		this.id = id;
+		this.modifiedTime = modifiedTime;
 		this.name = name;
 	}
 	
@@ -107,27 +126,6 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 		return Student.class;
 	}
  
-
-    /**
-     * Return the value associated with the column: addmisionNo.
-	 * @return A String object (this.addmisionNo)
-	 */
-	@Basic( optional = false )
-	@Column( name = "addmision_no", nullable = false, length = 45  )
-	public String getAddmisionNo() {
-		return this.addmisionNo;
-		
-	}
-	
-
-  
-    /**  
-     * Set the value related to the column: addmisionNo.
-	 * @param addmisionNo the addmisionNo value you wish to set
-	 */
-	public void setAddmisionNo(final String addmisionNo) {
-		this.addmisionNo = addmisionNo;
-	}
 
     /**
      * Return the value associated with the column: address.
@@ -151,34 +149,55 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 	}
 
     /**
-     * Return the value associated with the column: classStudent.
-	 * @return A Set&lt;ClassStudent&gt; object (this.classStudent)
+     * Return the value associated with the column: admissionNo.
+	 * @return A String object (this.admissionNo)
+	 */
+	@Basic( optional = false )
+	@Column( name = "admission_no", nullable = false, length = 45  )
+	public String getAdmissionNo() {
+		return this.admissionNo;
+		
+	}
+	
+
+  
+    /**  
+     * Set the value related to the column: admissionNo.
+	 * @param admissionNo the admissionNo value you wish to set
+	 */
+	public void setAdmissionNo(final String admissionNo) {
+		this.admissionNo = admissionNo;
+	}
+
+    /**
+     * Return the value associated with the column: classroomStudent.
+	 * @return A Set&lt;ClassroomStudent&gt; object (this.classroomStudent)
 	 */
  	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "studentIdstudent"  )
  	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
 	@Column( nullable = false  )
-	public Set<ClassStudent> getClassStudents() {
-		return this.classStudents;
+	public Set<ClassroomStudent> getClassroomStudents() {
+		return this.classroomStudents;
 		
 	}
 	
 	/**
-	 * Adds a bi-directional link of type ClassStudent to the classStudents set.
-	 * @param classStudent item to add
+	 * Adds a bi-directional link of type ClassroomStudent to the classroomStudents set.
+	 * @param classroomStudent item to add
 	 */
-	public void addClassStudent(ClassStudent classStudent) {
-		classStudent.setStudentIdstudent(this);
-		this.classStudents.add(classStudent);
+	public void addClassroomStudent(ClassroomStudent classroomStudent) {
+		classroomStudent.setStudentIdstudent(this);
+		this.classroomStudents.add(classroomStudent);
 	}
 
   
     /**  
-     * Set the value related to the column: classStudent.
-	 * @param classStudent the classStudent value you wish to set
+     * Set the value related to the column: classroomStudent.
+	 * @param classroomStudent the classroomStudent value you wish to set
 	 */
-	public void setClassStudents(final Set<ClassStudent> classStudent) {
-		this.classStudents = classStudent;
+	public void setClassroomStudents(final Set<ClassroomStudent> classroomStudent) {
+		this.classroomStudents = classroomStudent;
 	}
 
     /**
@@ -305,6 +324,27 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 	}
 
     /**
+     * Return the value associated with the column: modifiedTime.
+	 * @return A Date object (this.modifiedTime)
+	 */
+	@Basic( optional = false )
+	@Column( name = "modified_time", nullable = false  )
+	public Date getModifiedTime() {
+		return this.modifiedTime;
+		
+	}
+	
+
+  
+    /**  
+     * Set the value related to the column: modifiedTime.
+	 * @param modifiedTime the modifiedTime value you wish to set
+	 */
+	public void setModifiedTime(final Date modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
+
+    /**
      * Return the value associated with the column: name.
 	 * @return A String object (this.name)
 	 */
@@ -365,6 +405,99 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 		this.photo = photo;
 	}
 
+    /**
+     * Return the value associated with the column: results.
+	 * @return A Set&lt;Results&gt; object (this.results)
+	 */
+ 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "studentIdstudent"  )
+ 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+	@Basic( optional = false )
+	@Column( nullable = false  )
+	public Set<Results> getResultss() {
+		return this.resultss;
+		
+	}
+	
+	/**
+	 * Adds a bi-directional link of type Results to the resultss set.
+	 * @param results item to add
+	 */
+	public void addResults(Results results) {
+		results.setStudentIdstudent(this);
+		this.resultss.add(results);
+	}
+
+  
+    /**  
+     * Set the value related to the column: results.
+	 * @param results the results value you wish to set
+	 */
+	public void setResultss(final Set<Results> results) {
+		this.resultss = results;
+	}
+
+    /**
+     * Return the value associated with the column: studentGeneralexamProfile.
+	 * @return A Set&lt;StudentGeneralexamProfile&gt; object (this.studentGeneralexamProfile)
+	 */
+ 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "studentIdstudent"  )
+ 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+	@Basic( optional = false )
+	@Column( nullable = false  )
+	public Set<StudentGeneralexamProfile> getStudentGeneralexamProfiles() {
+		return this.studentGeneralexamProfiles;
+		
+	}
+	
+	/**
+	 * Adds a bi-directional link of type StudentGeneralexamProfile to the studentGeneralexamProfiles set.
+	 * @param studentGeneralexamProfile item to add
+	 */
+	public void addStudentGeneralexamProfile(StudentGeneralexamProfile studentGeneralexamProfile) {
+		studentGeneralexamProfile.setStudentIdstudent(this);
+		this.studentGeneralexamProfiles.add(studentGeneralexamProfile);
+	}
+
+  
+    /**  
+     * Set the value related to the column: studentGeneralexamProfile.
+	 * @param studentGeneralexamProfile the studentGeneralexamProfile value you wish to set
+	 */
+	public void setStudentGeneralexamProfiles(final Set<StudentGeneralexamProfile> studentGeneralexamProfile) {
+		this.studentGeneralexamProfiles = studentGeneralexamProfile;
+	}
+
+    /**
+     * Return the value associated with the column: studentSync.
+	 * @return A Set&lt;StudentSync&gt; object (this.studentSync)
+	 */
+ 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "studentIdstudent"  )
+ 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+	@Basic( optional = false )
+	@Column( nullable = false  )
+	public Set<StudentSync> getStudentSyncs() {
+		return this.studentSyncs;
+		
+	}
+	
+	/**
+	 * Adds a bi-directional link of type StudentSync to the studentSyncs set.
+	 * @param studentSync item to add
+	 */
+	public void addStudentSync(StudentSync studentSync) {
+		studentSync.setStudentIdstudent(this);
+		this.studentSyncs.add(studentSync);
+	}
+
+  
+    /**  
+     * Set the value related to the column: studentSync.
+	 * @param studentSync the studentSync value you wish to set
+	 */
+	public void setStudentSyncs(final Set<StudentSync> studentSync) {
+		this.studentSyncs = studentSync;
+	}
+
 
    /**
     * Deep copy.
@@ -376,10 +509,10 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 		
         final Student copy = (Student)super.clone();
 
-		copy.setAddmisionNo(this.getAddmisionNo());
 		copy.setAddress(this.getAddress());
-		if (this.getClassStudents() != null) {
-			copy.getClassStudents().addAll(this.getClassStudents());
+		copy.setAdmissionNo(this.getAdmissionNo());
+		if (this.getClassroomStudents() != null) {
+			copy.getClassroomStudents().addAll(this.getClassroomStudents());
 		}
 		copy.setDob(this.getDob());
 		copy.setFullName(this.getFullName());
@@ -388,9 +521,19 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 		if (this.getMarkss() != null) {
 			copy.getMarkss().addAll(this.getMarkss());
 		}
+		copy.setModifiedTime(this.getModifiedTime());
 		copy.setName(this.getName());
 		copy.setNameWtInitial(this.getNameWtInitial());
 		copy.setPhoto(this.getPhoto());
+		if (this.getResultss() != null) {
+			copy.getResultss().addAll(this.getResultss());
+		}
+		if (this.getStudentGeneralexamProfiles() != null) {
+			copy.getStudentGeneralexamProfiles().addAll(this.getStudentGeneralexamProfiles());
+		}
+		if (this.getStudentSyncs() != null) {
+			copy.getStudentSyncs().addAll(this.getStudentSyncs());
+		}
 		return copy;
 	}
 	
@@ -404,15 +547,16 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		
-		sb.append("addmisionNo: " + this.getAddmisionNo() + ", ");
 		sb.append("address: " + this.getAddress() + ", ");
+		sb.append("admissionNo: " + this.getAdmissionNo() + ", ");
 		sb.append("dob: " + this.getDob() + ", ");
 		sb.append("fullName: " + this.getFullName() + ", ");
 		sb.append("gender: " + this.getGender() + ", ");
 		sb.append("id: " + this.getId() + ", ");
+		sb.append("modifiedTime: " + this.getModifiedTime() + ", ");
 		sb.append("name: " + this.getName() + ", ");
 		sb.append("nameWtInitial: " + this.getNameWtInitial() + ", ");
-		sb.append("photo: " + (this.photo == null ? null : Arrays.toString(this.getPhoto())));
+		sb.append("photo: " + (this.photo == null ? null : Arrays.toString(this.getPhoto())) + ", ");
 		return sb.toString();		
 	}
 
@@ -458,11 +602,12 @@ public class Student implements Cloneable, Serializable, IPojoGenEntity, IStuden
 		
 		boolean result = true;
 		result = result && (((this.getId() == null) && ( that.getId() == null)) || (this.getId() != null  && this.getId().equals(that.getId())));
-		result = result && (((getAddmisionNo() == null) && (that.getAddmisionNo() == null)) || (getAddmisionNo() != null && getAddmisionNo().equals(that.getAddmisionNo())));
 		result = result && (((getAddress() == null) && (that.getAddress() == null)) || (getAddress() != null && getAddress().equals(that.getAddress())));
+		result = result && (((getAdmissionNo() == null) && (that.getAdmissionNo() == null)) || (getAdmissionNo() != null && getAdmissionNo().equals(that.getAdmissionNo())));
 		result = result && (((getDob() == null) && (that.getDob() == null)) || (getDob() != null && getDob().equals(that.getDob())));
 		result = result && (((getFullName() == null) && (that.getFullName() == null)) || (getFullName() != null && getFullName().equals(that.getFullName())));
 		result = result && (((getGender() == null) && (that.getGender() == null)) || (getGender() != null && getGender().equals(that.getGender())));
+		result = result && (((getModifiedTime() == null) && (that.getModifiedTime() == null)) || (getModifiedTime() != null && getModifiedTime().equals(that.getModifiedTime())));
 		result = result && (((getName() == null) && (that.getName() == null)) || (getName() != null && getName().equals(that.getName())));
 		result = result && (((getNameWtInitial() == null) && (that.getNameWtInitial() == null)) || (getNameWtInitial() != null && getNameWtInitial().equals(that.getNameWtInitial())));
 		result = result && (((getPhoto() == null) && (that.getPhoto() == null)) || (getPhoto() != null && getPhoto().equals(that.getPhoto())));

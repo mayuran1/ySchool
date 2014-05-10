@@ -2,16 +2,22 @@ package org.yarlithub.yschool.repository.services.data;
 
 import java.io.Serializable;
 import org.yarlithub.yschool.repository.factories.yschool.*;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassAnalyzerClassifier;
 import org.yarlithub.yschool.repository.model.obj.yschool.Classroom;
 import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomHasStaffHasRole;
 import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomHasStaffHasRolePK;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassStudent;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubject;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubjectHasStaffHasRole;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubjectHasStaffHasRolePK;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomModule;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomModuleHasStaffHasRole;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomModuleHasStaffHasRolePK;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomStudent;
+import org.yarlithub.yschool.repository.model.obj.yschool.Division;
 import org.yarlithub.yschool.repository.model.obj.yschool.Exam;
+import org.yarlithub.yschool.repository.model.obj.yschool.ExamSync;
 import org.yarlithub.yschool.repository.model.obj.yschool.ExamType;
+import org.yarlithub.yschool.repository.model.obj.yschool.Grade;
 import org.yarlithub.yschool.repository.model.obj.yschool.Marks;
+import org.yarlithub.yschool.repository.model.obj.yschool.Module;
+import org.yarlithub.yschool.repository.model.obj.yschool.Results;
 import org.yarlithub.yschool.repository.model.obj.yschool.Role;
 import org.yarlithub.yschool.repository.model.obj.yschool.School;
 import org.yarlithub.yschool.repository.model.obj.yschool.SchoolHasStaffHasRole;
@@ -22,7 +28,9 @@ import org.yarlithub.yschool.repository.model.obj.yschool.SectionHasStaffHasRole
 import org.yarlithub.yschool.repository.model.obj.yschool.Staff;
 import org.yarlithub.yschool.repository.model.obj.yschool.StaffHasRole;
 import org.yarlithub.yschool.repository.model.obj.yschool.Student;
-import org.yarlithub.yschool.repository.model.obj.yschool.StudentClassSubject;
+import org.yarlithub.yschool.repository.model.obj.yschool.StudentClassroomModule;
+import org.yarlithub.yschool.repository.model.obj.yschool.StudentGeneralexamProfile;
+import org.yarlithub.yschool.repository.model.obj.yschool.StudentSync;
 import org.yarlithub.yschool.repository.model.obj.yschool.Subject;
 import org.yarlithub.yschool.repository.model.obj.yschool.User;
 import org.yarlithub.yschool.repository.model.obj.yschool.UserRole;
@@ -95,12 +103,18 @@ public class DataLayerYschoolImpl implements DataLayerYschool {
     			daoMap = new ConcurrentHashMap<Class<?>, GenericDAO<?, ?>>(); 
 	 	   		daoMap.put(Classroom.class, HibernateYschoolDaoFactory.getClassroomDao());
 	 	   		daoMap.put(ClassroomHasStaffHasRole.class, HibernateYschoolDaoFactory.getClassroomHasStaffHasRoleDao());
-	 	   		daoMap.put(ClassStudent.class, HibernateYschoolDaoFactory.getClassStudentDao());
-	 	   		daoMap.put(ClassSubject.class, HibernateYschoolDaoFactory.getClassSubjectDao());
-	 	   		daoMap.put(ClassSubjectHasStaffHasRole.class, HibernateYschoolDaoFactory.getClassSubjectHasStaffHasRoleDao());
+	 	   		daoMap.put(ClassroomModule.class, HibernateYschoolDaoFactory.getClassroomModuleDao());
+	 	   		daoMap.put(ClassroomModuleHasStaffHasRole.class, HibernateYschoolDaoFactory.getClassroomModuleHasStaffHasRoleDao());
+	 	   		daoMap.put(ClassroomStudent.class, HibernateYschoolDaoFactory.getClassroomStudentDao());
+	 	   		daoMap.put(ClassAnalyzerClassifier.class, HibernateYschoolDaoFactory.getClassAnalyzerClassifierDao());
+	 	   		daoMap.put(Division.class, HibernateYschoolDaoFactory.getDivisionDao());
 	 	   		daoMap.put(Exam.class, HibernateYschoolDaoFactory.getExamDao());
+	 	   		daoMap.put(ExamSync.class, HibernateYschoolDaoFactory.getExamSyncDao());
 	 	   		daoMap.put(ExamType.class, HibernateYschoolDaoFactory.getExamTypeDao());
+	 	   		daoMap.put(Grade.class, HibernateYschoolDaoFactory.getGradeDao());
 	 	   		daoMap.put(Marks.class, HibernateYschoolDaoFactory.getMarksDao());
+	 	   		daoMap.put(Module.class, HibernateYschoolDaoFactory.getModuleDao());
+	 	   		daoMap.put(Results.class, HibernateYschoolDaoFactory.getResultsDao());
 	 	   		daoMap.put(Role.class, HibernateYschoolDaoFactory.getRoleDao());
 	 	   		daoMap.put(School.class, HibernateYschoolDaoFactory.getSchoolDao());
 	 	   		daoMap.put(SchoolHasStaffHasRole.class, HibernateYschoolDaoFactory.getSchoolHasStaffHasRoleDao());
@@ -109,7 +123,9 @@ public class DataLayerYschoolImpl implements DataLayerYschool {
 	 	   		daoMap.put(Staff.class, HibernateYschoolDaoFactory.getStaffDao());
 	 	   		daoMap.put(StaffHasRole.class, HibernateYschoolDaoFactory.getStaffHasRoleDao());
 	 	   		daoMap.put(Student.class, HibernateYschoolDaoFactory.getStudentDao());
-	 	   		daoMap.put(StudentClassSubject.class, HibernateYschoolDaoFactory.getStudentClassSubjectDao());
+	 	   		daoMap.put(StudentClassroomModule.class, HibernateYschoolDaoFactory.getStudentClassroomModuleDao());
+	 	   		daoMap.put(StudentGeneralexamProfile.class, HibernateYschoolDaoFactory.getStudentGeneralexamProfileDao());
+	 	   		daoMap.put(StudentSync.class, HibernateYschoolDaoFactory.getStudentSyncDao());
 	 	   		daoMap.put(Subject.class, HibernateYschoolDaoFactory.getSubjectDao());
 	 	   		daoMap.put(User.class, HibernateYschoolDaoFactory.getUserDao());
 	 	   		daoMap.put(UserRole.class, HibernateYschoolDaoFactory.getUserRoleDao());
@@ -221,78 +237,128 @@ public class DataLayerYschoolImpl implements DataLayerYschool {
     }  
 
     /** Deletes an object of a given Id. 
-     * Will load the object internally so consider using delete (ClassStudent obj) directly
+     * Will load the object internally so consider using delete (ClassroomModule obj) directly
      * @param id Identifier to delete
      */
-    public void deleteClassStudent(final Integer id)  {
-        HibernateYschoolDaoFactory.getClassStudentDao().delete(loadClassStudent(id));
+    public void deleteClassroomModule(final Integer id)  {
+        HibernateYschoolDaoFactory.getClassroomModuleDao().delete(loadClassroomModule(id));
     }
 	
     /**
      * Loads the given Object.
      * @param id Identifier to load
-     * @return a ClassStudent object
+     * @return a ClassroomModule object
      */
-    public ClassStudent loadClassStudent(final Integer id) {
-        return HibernateYschoolDaoFactory.getClassStudentDao().load(id);
+    public ClassroomModule loadClassroomModule(final Integer id) {
+        return HibernateYschoolDaoFactory.getClassroomModuleDao().load(id);
     }
     /**
      * Loads the given Object.
      * @param id Id to load
      * @return An object of type T
      */
-     public ClassStudent getClassStudent(final Integer id) {
-        return HibernateYschoolDaoFactory.getClassStudentDao().get(id);
+     public ClassroomModule getClassroomModule(final Integer id) {
+        return HibernateYschoolDaoFactory.getClassroomModuleDao().get(id);
     }  
 
     /** Deletes an object of a given Id. 
-     * Will load the object internally so consider using delete (ClassSubject obj) directly
+     * Will load the object internally so consider using delete (ClassroomModuleHasStaffHasRole obj) directly
      * @param id Identifier to delete
      */
-    public void deleteClassSubject(final Integer id)  {
-        HibernateYschoolDaoFactory.getClassSubjectDao().delete(loadClassSubject(id));
+    public void deleteClassroomModuleHasStaffHasRole(final ClassroomModuleHasStaffHasRolePK id)  {
+        HibernateYschoolDaoFactory.getClassroomModuleHasStaffHasRoleDao().delete(loadClassroomModuleHasStaffHasRole(id));
     }
 	
     /**
      * Loads the given Object.
      * @param id Identifier to load
-     * @return a ClassSubject object
+     * @return a ClassroomModuleHasStaffHasRole object
      */
-    public ClassSubject loadClassSubject(final Integer id) {
-        return HibernateYschoolDaoFactory.getClassSubjectDao().load(id);
+    public ClassroomModuleHasStaffHasRole loadClassroomModuleHasStaffHasRole(final ClassroomModuleHasStaffHasRolePK id) {
+        return HibernateYschoolDaoFactory.getClassroomModuleHasStaffHasRoleDao().load(id);
     }
     /**
      * Loads the given Object.
      * @param id Id to load
      * @return An object of type T
      */
-     public ClassSubject getClassSubject(final Integer id) {
-        return HibernateYschoolDaoFactory.getClassSubjectDao().get(id);
+     public ClassroomModuleHasStaffHasRole getClassroomModuleHasStaffHasRole(final ClassroomModuleHasStaffHasRolePK id) {
+        return HibernateYschoolDaoFactory.getClassroomModuleHasStaffHasRoleDao().get(id);
     }  
 
     /** Deletes an object of a given Id. 
-     * Will load the object internally so consider using delete (ClassSubjectHasStaffHasRole obj) directly
+     * Will load the object internally so consider using delete (ClassroomStudent obj) directly
      * @param id Identifier to delete
      */
-    public void deleteClassSubjectHasStaffHasRole(final ClassSubjectHasStaffHasRolePK id)  {
-        HibernateYschoolDaoFactory.getClassSubjectHasStaffHasRoleDao().delete(loadClassSubjectHasStaffHasRole(id));
+    public void deleteClassroomStudent(final Integer id)  {
+        HibernateYschoolDaoFactory.getClassroomStudentDao().delete(loadClassroomStudent(id));
     }
 	
     /**
      * Loads the given Object.
      * @param id Identifier to load
-     * @return a ClassSubjectHasStaffHasRole object
+     * @return a ClassroomStudent object
      */
-    public ClassSubjectHasStaffHasRole loadClassSubjectHasStaffHasRole(final ClassSubjectHasStaffHasRolePK id) {
-        return HibernateYschoolDaoFactory.getClassSubjectHasStaffHasRoleDao().load(id);
+    public ClassroomStudent loadClassroomStudent(final Integer id) {
+        return HibernateYschoolDaoFactory.getClassroomStudentDao().load(id);
     }
     /**
      * Loads the given Object.
      * @param id Id to load
      * @return An object of type T
      */
-     public ClassSubjectHasStaffHasRole getClassSubjectHasStaffHasRole(final ClassSubjectHasStaffHasRolePK id) {
-        return HibernateYschoolDaoFactory.getClassSubjectHasStaffHasRoleDao().get(id);
+     public ClassroomStudent getClassroomStudent(final Integer id) {
+        return HibernateYschoolDaoFactory.getClassroomStudentDao().get(id);
+    }  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (ClassAnalyzerClassifier obj) directly
+     * @param id Identifier to delete
+     */
+    public void deleteClassAnalyzerClassifier(final Integer id)  {
+        HibernateYschoolDaoFactory.getClassAnalyzerClassifierDao().delete(loadClassAnalyzerClassifier(id));
+    }
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a ClassAnalyzerClassifier object
+     */
+    public ClassAnalyzerClassifier loadClassAnalyzerClassifier(final Integer id) {
+        return HibernateYschoolDaoFactory.getClassAnalyzerClassifierDao().load(id);
+    }
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     public ClassAnalyzerClassifier getClassAnalyzerClassifier(final Integer id) {
+        return HibernateYschoolDaoFactory.getClassAnalyzerClassifierDao().get(id);
+    }  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (Division obj) directly
+     * @param id Identifier to delete
+     */
+    public void deleteDivision(final Integer id)  {
+        HibernateYschoolDaoFactory.getDivisionDao().delete(loadDivision(id));
+    }
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a Division object
+     */
+    public Division loadDivision(final Integer id) {
+        return HibernateYschoolDaoFactory.getDivisionDao().load(id);
+    }
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     public Division getDivision(final Integer id) {
+        return HibernateYschoolDaoFactory.getDivisionDao().get(id);
     }  
 
     /** Deletes an object of a given Id. 
@@ -321,6 +387,31 @@ public class DataLayerYschoolImpl implements DataLayerYschool {
     }  
 
     /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (ExamSync obj) directly
+     * @param id Identifier to delete
+     */
+    public void deleteExamSync(final Integer id)  {
+        HibernateYschoolDaoFactory.getExamSyncDao().delete(loadExamSync(id));
+    }
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a ExamSync object
+     */
+    public ExamSync loadExamSync(final Integer id) {
+        return HibernateYschoolDaoFactory.getExamSyncDao().load(id);
+    }
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     public ExamSync getExamSync(final Integer id) {
+        return HibernateYschoolDaoFactory.getExamSyncDao().get(id);
+    }  
+
+    /** Deletes an object of a given Id. 
      * Will load the object internally so consider using delete (ExamType obj) directly
      * @param id Identifier to delete
      */
@@ -346,6 +437,31 @@ public class DataLayerYschoolImpl implements DataLayerYschool {
     }  
 
     /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (Grade obj) directly
+     * @param id Identifier to delete
+     */
+    public void deleteGrade(final Integer id)  {
+        HibernateYschoolDaoFactory.getGradeDao().delete(loadGrade(id));
+    }
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a Grade object
+     */
+    public Grade loadGrade(final Integer id) {
+        return HibernateYschoolDaoFactory.getGradeDao().load(id);
+    }
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     public Grade getGrade(final Integer id) {
+        return HibernateYschoolDaoFactory.getGradeDao().get(id);
+    }  
+
+    /** Deletes an object of a given Id. 
      * Will load the object internally so consider using delete (Marks obj) directly
      * @param id Identifier to delete
      */
@@ -368,6 +484,56 @@ public class DataLayerYschoolImpl implements DataLayerYschool {
      */
      public Marks getMarks(final Integer id) {
         return HibernateYschoolDaoFactory.getMarksDao().get(id);
+    }  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (Module obj) directly
+     * @param id Identifier to delete
+     */
+    public void deleteModule(final Integer id)  {
+        HibernateYschoolDaoFactory.getModuleDao().delete(loadModule(id));
+    }
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a Module object
+     */
+    public Module loadModule(final Integer id) {
+        return HibernateYschoolDaoFactory.getModuleDao().load(id);
+    }
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     public Module getModule(final Integer id) {
+        return HibernateYschoolDaoFactory.getModuleDao().get(id);
+    }  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (Results obj) directly
+     * @param id Identifier to delete
+     */
+    public void deleteResults(final Integer id)  {
+        HibernateYschoolDaoFactory.getResultsDao().delete(loadResults(id));
+    }
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a Results object
+     */
+    public Results loadResults(final Integer id) {
+        return HibernateYschoolDaoFactory.getResultsDao().load(id);
+    }
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     public Results getResults(final Integer id) {
+        return HibernateYschoolDaoFactory.getResultsDao().get(id);
     }  
 
     /** Deletes an object of a given Id. 
@@ -571,28 +737,78 @@ public class DataLayerYschoolImpl implements DataLayerYschool {
     }  
 
     /** Deletes an object of a given Id. 
-     * Will load the object internally so consider using delete (StudentClassSubject obj) directly
+     * Will load the object internally so consider using delete (StudentClassroomModule obj) directly
      * @param id Identifier to delete
      */
-    public void deleteStudentClassSubject(final Integer id)  {
-        HibernateYschoolDaoFactory.getStudentClassSubjectDao().delete(loadStudentClassSubject(id));
+    public void deleteStudentClassroomModule(final Integer id)  {
+        HibernateYschoolDaoFactory.getStudentClassroomModuleDao().delete(loadStudentClassroomModule(id));
     }
 	
     /**
      * Loads the given Object.
      * @param id Identifier to load
-     * @return a StudentClassSubject object
+     * @return a StudentClassroomModule object
      */
-    public StudentClassSubject loadStudentClassSubject(final Integer id) {
-        return HibernateYschoolDaoFactory.getStudentClassSubjectDao().load(id);
+    public StudentClassroomModule loadStudentClassroomModule(final Integer id) {
+        return HibernateYschoolDaoFactory.getStudentClassroomModuleDao().load(id);
     }
     /**
      * Loads the given Object.
      * @param id Id to load
      * @return An object of type T
      */
-     public StudentClassSubject getStudentClassSubject(final Integer id) {
-        return HibernateYschoolDaoFactory.getStudentClassSubjectDao().get(id);
+     public StudentClassroomModule getStudentClassroomModule(final Integer id) {
+        return HibernateYschoolDaoFactory.getStudentClassroomModuleDao().get(id);
+    }  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (StudentGeneralexamProfile obj) directly
+     * @param id Identifier to delete
+     */
+    public void deleteStudentGeneralexamProfile(final Integer id)  {
+        HibernateYschoolDaoFactory.getStudentGeneralexamProfileDao().delete(loadStudentGeneralexamProfile(id));
+    }
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a StudentGeneralexamProfile object
+     */
+    public StudentGeneralexamProfile loadStudentGeneralexamProfile(final Integer id) {
+        return HibernateYschoolDaoFactory.getStudentGeneralexamProfileDao().load(id);
+    }
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     public StudentGeneralexamProfile getStudentGeneralexamProfile(final Integer id) {
+        return HibernateYschoolDaoFactory.getStudentGeneralexamProfileDao().get(id);
+    }  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (StudentSync obj) directly
+     * @param id Identifier to delete
+     */
+    public void deleteStudentSync(final Integer id)  {
+        HibernateYschoolDaoFactory.getStudentSyncDao().delete(loadStudentSync(id));
+    }
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a StudentSync object
+     */
+    public StudentSync loadStudentSync(final Integer id) {
+        return HibernateYschoolDaoFactory.getStudentSyncDao().load(id);
+    }
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     public StudentSync getStudentSync(final Integer id) {
+        return HibernateYschoolDaoFactory.getStudentSyncDao().get(id);
     }  
 
     /** Deletes an object of a given Id. 

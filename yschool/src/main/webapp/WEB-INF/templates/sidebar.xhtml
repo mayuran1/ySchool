@@ -1,29 +1,43 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:ui="http://java.sun.com/jsf/facelets">
-    <div class="span2">
-        <div class="well sidebar-nav">
+    <div class="col-md-2">
+        <div class="well sidebar-nav" style="padding: 0px;">
 
-            <ul class="thumbnails">
 
-                <li class="span11">
+            <div class="row" id="master-sidebar">
+                <div class="col-md-12">
+                    <a href="/yschool/faces/classroom/classroomHome.xhtml">
+                        <div class="thumbnail thumbnail-sidebar" id="sidebar-classroom-thumbnail" style="margin-bottom: 0px;">
+
+                            <img src="/yschool/ico/arrangements-small.png" alt="myschool" align="left"/>
+
+                            <div class="caption">
+                                <h5 align="left">Classroom</h5>
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-12">
                     <a href="/yschool/faces/student/studentHome.xhtml">
-                        <div class="thumbnail">
+                        <div class="thumbnail thumbnail-sidebar" id="sidebar-student-thumbnail" style="margin-bottom: 0px;">
 
                             <img src="/yschool/ico/student-small.png" alt="myschool" align="left"/>
 
-                            <div class="caption" >
+                            <div class="caption">
                                 <h5 align="left">Students</h5>
 
                                 <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>-->
                             </div>
                         </div>
                     </a>
-                </li>
+                </div>
 
-                <li class="span11">
+                <div class="col-md-12">
                     <a href="/yschool/faces/staff/staffHome.xhtml">
-                        <div class="thumbnail">
+                        <div class="thumbnail thumbnail-sidebar" id="sidebar-staff-thumbnail" style="margin-bottom: 0px;">
 
                             <img src="/yschool/ico/staff-small.png" alt="myschool" align="left"/>
 
@@ -34,11 +48,11 @@
                             </div>
                         </div>
                     </a>
-                </li>
+                </div>
 
-                <li class="span11">
-                    <a href="/yschool/faces/examinations/examinationsHome.xhtml">
-                        <div class="thumbnail">
+                <div class="col-md-12">
+                    <a href="/yschool/faces/examination/examinationHome.xhtml">
+                        <div class="thumbnail thumbnail-sidebar" id="sidebar-examination-thumbnail" style="margin-bottom: 0px;">
 
                             <img src="/yschool/ico/examinations-small.png" alt="myschool" align="left"/>
 
@@ -49,26 +63,12 @@
                             </div>
                         </div>
                     </a>
-                </li>
+                </div>
 
-                <li class="span11">
-                    <a href="/yschool/faces/arrangements/arrangementsHome.xhtml">
-                        <div class="thumbnail">
 
-                            <img src="/yschool/ico/arrangements-small.png" alt="myschool" align="left"/>
-
-                            <div class="caption">
-                                <h5 align="left">Arrange</h5>
-
-                                <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>-->
-                            </div>
-                        </div>
-                    </a>
-                </li>
-
-                <li class="span11">
+                <div class="col-md-12">
                     <a href="/yschool/faces/settings/settingsHome.xhtml">
-                        <div class="thumbnail">
+                        <div class="thumbnail thumbnail-sidebar" id="sidebar-settings-thumbnail" style="margin-bottom: 0px;">
 
                             <img src="/yschool/ico/settings-small.png" alt="myschool" align="left"/>
 
@@ -79,11 +79,11 @@
                             </div>
                         </div>
                     </a>
-                </li>
+                </div>
 
-                <li class="span11">
+                <div class="col-md-12">
                     <a href="/yschool/faces/analytics/analyticsHome.xhtml">
-                        <div class="thumbnail">
+                        <div class="thumbnail thumbnail-sidebar" id="sidebar-analytics-thumbnail" style="margin-bottom: 0px;">
 
                             <img src="/yschool/ico/analytics-small.png" alt="myschool" align="left"/>
 
@@ -94,9 +94,9 @@
                             </div>
                         </div>
                     </a>
-                </li>
+                </div>
 
-            </ul>
+            </div>
 
         </div>
         <!--/.well -->

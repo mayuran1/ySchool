@@ -1,6 +1,7 @@
 package org.yarlithub.yschool.repository.model.obj.yschool.iface;
+import java.util.Date;
 import java.util.Set;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubject;
+import org.yarlithub.yschool.repository.model.obj.yschool.Module;
 
 
 /** 
@@ -11,25 +12,6 @@ import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubject;
 public interface ISubject {
 
 
-
-    /**
-     * Return the value associated with the column: classSubject.
-	 * @return A Set&lt;ClassSubject&gt; object (this.classSubject)
-	 */
-	Set<ClassSubject> getClassSubjects();
-	
-	/**
-	 * Adds a bi-directional link of type ClassSubject to the classSubjects set.
-	 * @param classSubject item to add
-	 */
-	void addClassSubject(ClassSubject classSubject);
-
-  
-    /**  
-     * Set the value related to the column: classSubject.
-	 * @param classSubject the classSubject value you wish to set
-	 */
-	void setClassSubjects(final Set<ClassSubject> classSubject);
 
     /**
      * Return the value associated with the column: id.
@@ -46,32 +28,65 @@ public interface ISubject {
 	void setId(final Integer id);
 
     /**
-     * Return the value associated with the column: isOptional.
-	 * @return A Boolean object (this.isOptional)
+     * Return the value associated with the column: modifiedTime.
+	 * @return A Date object (this.modifiedTime)
 	 */
-	Boolean isIsOptional();
+	Date getModifiedTime();
 	
 
   
     /**  
-     * Set the value related to the column: isOptional.
-	 * @param isOptional the isOptional value you wish to set
+     * Set the value related to the column: modifiedTime.
+	 * @param modifiedTime the modifiedTime value you wish to set
 	 */
-	void setIsOptional(final Boolean isOptional);
+	void setModifiedTime(final Date modifiedTime);
 
     /**
-     * Return the value associated with the column: name.
-	 * @return A String object (this.name)
+     * Return the value associated with the column: module.
+	 * @return A Set&lt;Module&gt; object (this.module)
 	 */
-	String getName();
+	Set<Module> getModules();
+	
+	/**
+	 * Adds a bi-directional link of type Module to the modules set.
+	 * @param module item to add
+	 */
+	void addModule(Module module);
+
+  
+    /**  
+     * Set the value related to the column: module.
+	 * @param module the module value you wish to set
+	 */
+	void setModules(final Set<Module> module);
+
+    /**
+     * Return the value associated with the column: subjectCode.
+	 * @return A String object (this.subjectCode)
+	 */
+	String getSubjectCode();
 	
 
   
     /**  
-     * Set the value related to the column: name.
-	 * @param name the name value you wish to set
+     * Set the value related to the column: subjectCode.
+	 * @param subjectCode the subjectCode value you wish to set
 	 */
-	void setName(final String name);
+	void setSubjectCode(final String subjectCode);
+
+    /**
+     * Return the value associated with the column: subjectName.
+	 * @return A String object (this.subjectName)
+	 */
+	String getSubjectName();
+	
+
+  
+    /**  
+     * Set the value related to the column: subjectName.
+	 * @param subjectName the subjectName value you wish to set
+	 */
+	void setSubjectName(final String subjectName);
 
 	// end of interface
 }

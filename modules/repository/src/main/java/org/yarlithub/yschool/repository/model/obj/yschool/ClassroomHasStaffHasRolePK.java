@@ -1,5 +1,6 @@
 package org.yarlithub.yschool.repository.model.obj.yschool;
 
+import com.felees.hbnpojogen.persistence.IPojoGenEntity;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ import org.yarlithub.yschool.repository.model.obj.yschool.iface.IClassroomHasSta
 public class ClassroomHasStaffHasRolePK implements Cloneable, Serializable,  IClassroomHasStaffHasRolePK {
 
 	/** Serial Version UID. */
-	private static final long serialVersionUID = -559009397L;
+	private static final long serialVersionUID = -558977437L;
 
 	
 
@@ -28,14 +29,14 @@ public class ClassroomHasStaffHasRolePK implements Cloneable, Serializable,  ICl
 	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
-	@JoinColumn(name = "Classroom_idClass", nullable = false , insertable = false, updatable = false )
-	private Classroom classroomIdclass;
+	@JoinColumn(name = "classroom_idclassroom", nullable = false , insertable = false, updatable = false )
+	private Classroom classroomIdclassroom;
 
 	/** Field mapping. */
 	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
-	@JoinColumn(name = "Staff_has_Role_idStaff_has_role", nullable = false , insertable = false, updatable = false )
+	@JoinColumn(name = "staff_has_role_idstaff_has_role", nullable = false , insertable = false, updatable = false )
 	private StaffHasRole staffHasRoleIdstaffHasRole;
 
  
@@ -52,22 +53,22 @@ public class ClassroomHasStaffHasRolePK implements Cloneable, Serializable,  ICl
  
 
     /**
-     * Return the value associated with the column: classroomIdclass.
-	 * @return A Classroom object (this.classroomIdclass)
+     * Return the value associated with the column: classroomIdclassroom.
+	 * @return A Classroom object (this.classroomIdclassroom)
 	 */
-	public Classroom getClassroomIdclass() {
-		return this.classroomIdclass;
+	public Classroom getClassroomIdclassroom() {
+		return this.classroomIdclassroom;
 		
 	}
 	
 
   
     /**  
-     * Set the value related to the column: classroomIdclass.
-	 * @param classroomIdclass the classroomIdclass value you wish to set
+     * Set the value related to the column: classroomIdclassroom.
+	 * @param classroomIdclassroom the classroomIdclassroom value you wish to set
 	 */
-	public void setClassroomIdclass(final Classroom classroomIdclass) {
-		this.classroomIdclass = classroomIdclass;
+	public void setClassroomIdclassroom(final Classroom classroomIdclassroom) {
+		this.classroomIdclassroom = classroomIdclassroom;
 	}
 
     /**
@@ -148,7 +149,7 @@ public class ClassroomHasStaffHasRolePK implements Cloneable, Serializable,  ICl
 		
 		
 		boolean result = true;
-		result = result && (((getClassroomIdclass() == null) && (that.getClassroomIdclass() == null)) || (getClassroomIdclass() != null && getClassroomIdclass().getId().equals(that.getClassroomIdclass().getId())));	
+		result = result && (((getClassroomIdclassroom() == null) && (that.getClassroomIdclassroom() == null)) || (getClassroomIdclassroom() != null && getClassroomIdclassroom().getId().equals(that.getClassroomIdclassroom().getId())));	
 		result = result && (((getStaffHasRoleIdstaffHasRole() == null) && (that.getStaffHasRoleIdstaffHasRole() == null)) || (getStaffHasRoleIdstaffHasRole() != null && getStaffHasRoleIdstaffHasRole().getId().equals(that.getStaffHasRoleIdstaffHasRole().getId())));	
 		return result;
 	}
@@ -160,7 +161,7 @@ public class ClassroomHasStaffHasRolePK implements Cloneable, Serializable,  ICl
 	@Override
 	public int hashCode() {
 	int hash = 0;
-		hash = hash + getClassroomIdclass().hashCode();
+		hash = hash + getClassroomIdclassroom().hashCode();
 		hash = hash + getStaffHasRoleIdstaffHasRole().hashCode();
 	return hash;
 	}

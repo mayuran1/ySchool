@@ -22,6 +22,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.proxy.HibernateProxy;
+import org.yarlithub.yschool.repository.model.obj.yschool.ExamSync;
+import org.yarlithub.yschool.repository.model.obj.yschool.Marks;
+import org.yarlithub.yschool.repository.model.obj.yschool.Results;
 import org.yarlithub.yschool.repository.model.obj.yschool.iface.IExam;
 
 
@@ -35,7 +38,7 @@ import org.yarlithub.yschool.repository.model.obj.yschool.iface.IExam;
 public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
 
 	/** Serial Version UID. */
-	private static final long serialVersionUID = -559009391L;
+	private static final long serialVersionUID = -558977429L;
 
 	/** Use a WeakHashMap so entries will be garbage collected once all entities 
 		referring to a saved hash are garbage collected themselves. */
@@ -47,9 +50,12 @@ public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
 	
 
 	/** Field mapping. */
-	private ClassSubject classSubjectIdclassSubject;
+	private ClassroomModule classroomModuleIdclassroomModule;
 	/** Field mapping. */
 	private Date date;
+	/** Field mapping. */
+	private Set<ExamSync> examSyncs = new HashSet<ExamSync>();
+
 	/** Field mapping. */
 	private ExamType examTypeIdexamType;
 	/** Field mapping. */
@@ -58,9 +64,12 @@ public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
 	private Set<Marks> markss = new HashSet<Marks>();
 
 	/** Field mapping. */
-	private Integer term;
+	private Date modifiedTime;
 	/** Field mapping. */
-	private Date year;
+	private Set<Results> resultss = new HashSet<Results>();
+
+	/** Field mapping. */
+	private Integer term;
 	/**
 	 * Default constructor, mainly for hibernate use.
 	 */
@@ -78,16 +87,16 @@ public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
 	/** Constructor taking a given ID.
 	 * @param date Date object;
 	 * @param id Integer object;
+	 * @param modifiedTime Date object;
 	 * @param term Integer object;
-	 * @param year Date object;
 	 */
-	public Exam(Date date, Integer id, Integer term, 					
-			Date year) {
+	public Exam(Date date, Integer id, Date modifiedTime, 					
+			Integer term) {
 
 		this.date = date;
 		this.id = id;
+		this.modifiedTime = modifiedTime;
 		this.term = term;
-		this.year = year;
 	}
 	
  
@@ -104,26 +113,26 @@ public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
  
 
     /**
-     * Return the value associated with the column: classSubjectIdclassSubject.
-	 * @return A ClassSubject object (this.classSubjectIdclassSubject)
+     * Return the value associated with the column: classroomModuleIdclassroomModule.
+	 * @return A ClassroomModule object (this.classroomModuleIdclassroomModule)
 	 */
 	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = true )
-	@JoinColumn(name = "Class_Subject_idClass_Subject", nullable = true )
-	public ClassSubject getClassSubjectIdclassSubject() {
-		return this.classSubjectIdclassSubject;
+	@JoinColumn(name = "classroom_module_idclassroom_module", nullable = true )
+	public ClassroomModule getClassroomModuleIdclassroomModule() {
+		return this.classroomModuleIdclassroomModule;
 		
 	}
 	
 
   
     /**  
-     * Set the value related to the column: classSubjectIdclassSubject.
-	 * @param classSubjectIdclassSubject the classSubjectIdclassSubject value you wish to set
+     * Set the value related to the column: classroomModuleIdclassroomModule.
+	 * @param classroomModuleIdclassroomModule the classroomModuleIdclassroomModule value you wish to set
 	 */
-	public void setClassSubjectIdclassSubject(final ClassSubject classSubjectIdclassSubject) {
-		this.classSubjectIdclassSubject = classSubjectIdclassSubject;
+	public void setClassroomModuleIdclassroomModule(final ClassroomModule classroomModuleIdclassroomModule) {
+		this.classroomModuleIdclassroomModule = classroomModuleIdclassroomModule;
 	}
 
     /**
@@ -148,13 +157,44 @@ public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
 	}
 
     /**
+     * Return the value associated with the column: examSync.
+	 * @return A Set&lt;ExamSync&gt; object (this.examSync)
+	 */
+ 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "examIdexam"  )
+ 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+	@Basic( optional = false )
+	@Column( nullable = false  )
+	public Set<ExamSync> getExamSyncs() {
+		return this.examSyncs;
+		
+	}
+	
+	/**
+	 * Adds a bi-directional link of type ExamSync to the examSyncs set.
+	 * @param examSync item to add
+	 */
+	public void addExamSync(ExamSync examSync) {
+		examSync.setExamIdexam(this);
+		this.examSyncs.add(examSync);
+	}
+
+  
+    /**  
+     * Set the value related to the column: examSync.
+	 * @param examSync the examSync value you wish to set
+	 */
+	public void setExamSyncs(final Set<ExamSync> examSync) {
+		this.examSyncs = examSync;
+	}
+
+    /**
      * Return the value associated with the column: examTypeIdexamType.
 	 * @return A ExamType object (this.examTypeIdexamType)
 	 */
 	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = true )
-	@JoinColumn(name = "Exam_Type_idExam_Type", nullable = true )
+	@JoinColumn(name = "exam_type_idexam_type", nullable = true )
 	public ExamType getExamTypeIdexamType() {
 		return this.examTypeIdexamType;
 		
@@ -233,6 +273,58 @@ public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
 	}
 
     /**
+     * Return the value associated with the column: modifiedTime.
+	 * @return A Date object (this.modifiedTime)
+	 */
+	@Basic( optional = false )
+	@Column( name = "modified_time", nullable = false  )
+	public Date getModifiedTime() {
+		return this.modifiedTime;
+		
+	}
+	
+
+  
+    /**  
+     * Set the value related to the column: modifiedTime.
+	 * @param modifiedTime the modifiedTime value you wish to set
+	 */
+	public void setModifiedTime(final Date modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
+
+    /**
+     * Return the value associated with the column: results.
+	 * @return A Set&lt;Results&gt; object (this.results)
+	 */
+ 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "examIdexam"  )
+ 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+	@Basic( optional = false )
+	@Column( nullable = false  )
+	public Set<Results> getResultss() {
+		return this.resultss;
+		
+	}
+	
+	/**
+	 * Adds a bi-directional link of type Results to the resultss set.
+	 * @param results item to add
+	 */
+	public void addResults(Results results) {
+		results.setExamIdexam(this);
+		this.resultss.add(results);
+	}
+
+  
+    /**  
+     * Set the value related to the column: results.
+	 * @param results the results value you wish to set
+	 */
+	public void setResultss(final Set<Results> results) {
+		this.resultss = results;
+	}
+
+    /**
      * Return the value associated with the column: term.
 	 * @return A Integer object (this.term)
 	 */
@@ -253,27 +345,6 @@ public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
 		this.term = term;
 	}
 
-    /**
-     * Return the value associated with the column: year.
-	 * @return A Date object (this.year)
-	 */
-	@Basic( optional = false )
-	@Column( nullable = false  )
-	public Date getYear() {
-		return this.year;
-		
-	}
-	
-
-  
-    /**  
-     * Set the value related to the column: year.
-	 * @param year the year value you wish to set
-	 */
-	public void setYear(final Date year) {
-		this.year = year;
-	}
-
 
    /**
     * Deep copy.
@@ -285,15 +356,21 @@ public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
 		
         final Exam copy = (Exam)super.clone();
 
-		copy.setClassSubjectIdclassSubject(this.getClassSubjectIdclassSubject());
+		copy.setClassroomModuleIdclassroomModule(this.getClassroomModuleIdclassroomModule());
 		copy.setDate(this.getDate());
+		if (this.getExamSyncs() != null) {
+			copy.getExamSyncs().addAll(this.getExamSyncs());
+		}
 		copy.setExamTypeIdexamType(this.getExamTypeIdexamType());
 		copy.setId(this.getId());
 		if (this.getMarkss() != null) {
 			copy.getMarkss().addAll(this.getMarkss());
 		}
+		copy.setModifiedTime(this.getModifiedTime());
+		if (this.getResultss() != null) {
+			copy.getResultss().addAll(this.getResultss());
+		}
 		copy.setTerm(this.getTerm());
-		copy.setYear(this.getYear());
 		return copy;
 	}
 	
@@ -309,8 +386,8 @@ public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
 		
 		sb.append("date: " + this.getDate() + ", ");
 		sb.append("id: " + this.getId() + ", ");
-		sb.append("term: " + this.getTerm() + ", ");
-		sb.append("year: " + this.getYear());
+		sb.append("modifiedTime: " + this.getModifiedTime() + ", ");
+		sb.append("term: " + this.getTerm());
 		return sb.toString();		
 	}
 
@@ -356,11 +433,11 @@ public class Exam implements Cloneable, Serializable, IPojoGenEntity, IExam {
 		
 		boolean result = true;
 		result = result && (((this.getId() == null) && ( that.getId() == null)) || (this.getId() != null  && this.getId().equals(that.getId())));
-		result = result && (((getClassSubjectIdclassSubject() == null) && (that.getClassSubjectIdclassSubject() == null)) || (getClassSubjectIdclassSubject() != null && getClassSubjectIdclassSubject().getId().equals(that.getClassSubjectIdclassSubject().getId())));	
+		result = result && (((getClassroomModuleIdclassroomModule() == null) && (that.getClassroomModuleIdclassroomModule() == null)) || (getClassroomModuleIdclassroomModule() != null && getClassroomModuleIdclassroomModule().getId().equals(that.getClassroomModuleIdclassroomModule().getId())));	
 		result = result && (((getDate() == null) && (that.getDate() == null)) || (getDate() != null && getDate().equals(that.getDate())));
 		result = result && (((getExamTypeIdexamType() == null) && (that.getExamTypeIdexamType() == null)) || (getExamTypeIdexamType() != null && getExamTypeIdexamType().getId().equals(that.getExamTypeIdexamType().getId())));	
+		result = result && (((getModifiedTime() == null) && (that.getModifiedTime() == null)) || (getModifiedTime() != null && getModifiedTime().equals(that.getModifiedTime())));
 		result = result && (((getTerm() == null) && (that.getTerm() == null)) || (getTerm() != null && getTerm().equals(that.getTerm())));
-		result = result && (((getYear() == null) && (that.getYear() == null)) || (getYear() != null && getYear().equals(that.getYear())));
 		return result;
 	}
 	

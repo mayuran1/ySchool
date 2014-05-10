@@ -1,8 +1,8 @@
 package org.yarlithub.yschool.repository.model.obj.yschool.iface;
 import java.util.Date;
 import java.util.Set;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubjectHasStaffHasRole;
 import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomHasStaffHasRole;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomModuleHasStaffHasRole;
 import org.yarlithub.yschool.repository.model.obj.yschool.Role;
 import org.yarlithub.yschool.repository.model.obj.yschool.SchoolHasStaffHasRole;
 import org.yarlithub.yschool.repository.model.obj.yschool.SectionHasStaffHasRole;
@@ -38,23 +38,23 @@ public interface IStaffHasRole {
 	void setClassroomHasStaffHasRoles(final Set<ClassroomHasStaffHasRole> classroomHasStaffHasRole);
 
     /**
-     * Return the value associated with the column: classSubjectHasStaffHasRole.
-	 * @return A Set&lt;ClassSubjectHasStaffHasRole&gt; object (this.classSubjectHasStaffHasRole)
+     * Return the value associated with the column: classroomModuleHasStaffHasRole.
+	 * @return A Set&lt;ClassroomModuleHasStaffHasRole&gt; object (this.classroomModuleHasStaffHasRole)
 	 */
-	Set<ClassSubjectHasStaffHasRole> getClassSubjectHasStaffHasRoles();
+	Set<ClassroomModuleHasStaffHasRole> getClassroomModuleHasStaffHasRoles();
 	
 	/**
-	 * Adds a bi-directional link of type ClassSubjectHasStaffHasRole to the classSubjectHasStaffHasRoles set.
-	 * @param classSubjectHasStaffHasRole item to add
+	 * Adds a bi-directional link of type ClassroomModuleHasStaffHasRole to the classroomModuleHasStaffHasRoles set.
+	 * @param classroomModuleHasStaffHasRole item to add
 	 */
-	void addClassSubjectHasStaffHasRole(ClassSubjectHasStaffHasRole classSubjectHasStaffHasRole);
+	void addClassroomModuleHasStaffHasRole(ClassroomModuleHasStaffHasRole classroomModuleHasStaffHasRole);
 
   
     /**  
-     * Set the value related to the column: classSubjectHasStaffHasRole.
-	 * @param classSubjectHasStaffHasRole the classSubjectHasStaffHasRole value you wish to set
+     * Set the value related to the column: classroomModuleHasStaffHasRole.
+	 * @param classroomModuleHasStaffHasRole the classroomModuleHasStaffHasRole value you wish to set
 	 */
-	void setClassSubjectHasStaffHasRoles(final Set<ClassSubjectHasStaffHasRole> classSubjectHasStaffHasRole);
+	void setClassroomModuleHasStaffHasRoles(final Set<ClassroomModuleHasStaffHasRole> classroomModuleHasStaffHasRole);
 
     /**
      * Return the value associated with the column: endDate.

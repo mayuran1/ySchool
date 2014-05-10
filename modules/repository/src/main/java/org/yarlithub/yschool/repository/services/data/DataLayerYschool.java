@@ -1,16 +1,22 @@
 package org.yarlithub.yschool.repository.services.data;
 
 import java.io.Serializable;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassAnalyzerClassifier;
 import org.yarlithub.yschool.repository.model.obj.yschool.Classroom;
 import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomHasStaffHasRole;
 import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomHasStaffHasRolePK;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassStudent;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubject;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubjectHasStaffHasRole;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubjectHasStaffHasRolePK;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomModule;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomModuleHasStaffHasRole;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomModuleHasStaffHasRolePK;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomStudent;
+import org.yarlithub.yschool.repository.model.obj.yschool.Division;
 import org.yarlithub.yschool.repository.model.obj.yschool.Exam;
+import org.yarlithub.yschool.repository.model.obj.yschool.ExamSync;
 import org.yarlithub.yschool.repository.model.obj.yschool.ExamType;
+import org.yarlithub.yschool.repository.model.obj.yschool.Grade;
 import org.yarlithub.yschool.repository.model.obj.yschool.Marks;
+import org.yarlithub.yschool.repository.model.obj.yschool.Module;
+import org.yarlithub.yschool.repository.model.obj.yschool.Results;
 import org.yarlithub.yschool.repository.model.obj.yschool.Role;
 import org.yarlithub.yschool.repository.model.obj.yschool.School;
 import org.yarlithub.yschool.repository.model.obj.yschool.SchoolHasStaffHasRole;
@@ -21,7 +27,9 @@ import org.yarlithub.yschool.repository.model.obj.yschool.SectionHasStaffHasRole
 import org.yarlithub.yschool.repository.model.obj.yschool.Staff;
 import org.yarlithub.yschool.repository.model.obj.yschool.StaffHasRole;
 import org.yarlithub.yschool.repository.model.obj.yschool.Student;
-import org.yarlithub.yschool.repository.model.obj.yschool.StudentClassSubject;
+import org.yarlithub.yschool.repository.model.obj.yschool.StudentClassroomModule;
+import org.yarlithub.yschool.repository.model.obj.yschool.StudentGeneralexamProfile;
+import org.yarlithub.yschool.repository.model.obj.yschool.StudentSync;
 import org.yarlithub.yschool.repository.model.obj.yschool.Subject;
 import org.yarlithub.yschool.repository.model.obj.yschool.User;
 import org.yarlithub.yschool.repository.model.obj.yschool.UserRole;
@@ -112,61 +120,99 @@ public interface DataLayerYschool {
      ClassroomHasStaffHasRole getClassroomHasStaffHasRole(final ClassroomHasStaffHasRolePK id);  
 
     /** Deletes an object of a given Id. 
-     * Will load the object internally so consider using delete (ClassStudent obj) directly
+     * Will load the object internally so consider using delete (ClassroomModule obj) directly
      * @param id Identifier to delete
      */
-    void deleteClassStudent(final Integer id);
+    void deleteClassroomModule(final Integer id);
 	
     /**
      * Loads the given Object.
      * @param id Identifier to load
-     * @return a ClassStudent object
+     * @return a ClassroomModule object
      */
-    ClassStudent loadClassStudent(final Integer id);
+    ClassroomModule loadClassroomModule(final Integer id);
     /**
      * Loads the given Object.
      * @param id Id to load
      * @return An object of type T
      */
-     ClassStudent getClassStudent(final Integer id);  
+     ClassroomModule getClassroomModule(final Integer id);  
 
     /** Deletes an object of a given Id. 
-     * Will load the object internally so consider using delete (ClassSubject obj) directly
+     * Will load the object internally so consider using delete (ClassroomModuleHasStaffHasRole obj) directly
      * @param id Identifier to delete
      */
-    void deleteClassSubject(final Integer id);
+    void deleteClassroomModuleHasStaffHasRole(final ClassroomModuleHasStaffHasRolePK id);
 	
     /**
      * Loads the given Object.
      * @param id Identifier to load
-     * @return a ClassSubject object
+     * @return a ClassroomModuleHasStaffHasRole object
      */
-    ClassSubject loadClassSubject(final Integer id);
+    ClassroomModuleHasStaffHasRole loadClassroomModuleHasStaffHasRole(final ClassroomModuleHasStaffHasRolePK id);
     /**
      * Loads the given Object.
      * @param id Id to load
      * @return An object of type T
      */
-     ClassSubject getClassSubject(final Integer id);  
+     ClassroomModuleHasStaffHasRole getClassroomModuleHasStaffHasRole(final ClassroomModuleHasStaffHasRolePK id);  
 
     /** Deletes an object of a given Id. 
-     * Will load the object internally so consider using delete (ClassSubjectHasStaffHasRole obj) directly
+     * Will load the object internally so consider using delete (ClassroomStudent obj) directly
      * @param id Identifier to delete
      */
-    void deleteClassSubjectHasStaffHasRole(final ClassSubjectHasStaffHasRolePK id);
+    void deleteClassroomStudent(final Integer id);
 	
     /**
      * Loads the given Object.
      * @param id Identifier to load
-     * @return a ClassSubjectHasStaffHasRole object
+     * @return a ClassroomStudent object
      */
-    ClassSubjectHasStaffHasRole loadClassSubjectHasStaffHasRole(final ClassSubjectHasStaffHasRolePK id);
+    ClassroomStudent loadClassroomStudent(final Integer id);
     /**
      * Loads the given Object.
      * @param id Id to load
      * @return An object of type T
      */
-     ClassSubjectHasStaffHasRole getClassSubjectHasStaffHasRole(final ClassSubjectHasStaffHasRolePK id);  
+     ClassroomStudent getClassroomStudent(final Integer id);  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (ClassAnalyzerClassifier obj) directly
+     * @param id Identifier to delete
+     */
+    void deleteClassAnalyzerClassifier(final Integer id);
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a ClassAnalyzerClassifier object
+     */
+    ClassAnalyzerClassifier loadClassAnalyzerClassifier(final Integer id);
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     ClassAnalyzerClassifier getClassAnalyzerClassifier(final Integer id);  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (Division obj) directly
+     * @param id Identifier to delete
+     */
+    void deleteDivision(final Integer id);
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a Division object
+     */
+    Division loadDivision(final Integer id);
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     Division getDivision(final Integer id);  
 
     /** Deletes an object of a given Id. 
      * Will load the object internally so consider using delete (Exam obj) directly
@@ -188,6 +234,25 @@ public interface DataLayerYschool {
      Exam getExam(final Integer id);  
 
     /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (ExamSync obj) directly
+     * @param id Identifier to delete
+     */
+    void deleteExamSync(final Integer id);
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a ExamSync object
+     */
+    ExamSync loadExamSync(final Integer id);
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     ExamSync getExamSync(final Integer id);  
+
+    /** Deletes an object of a given Id. 
      * Will load the object internally so consider using delete (ExamType obj) directly
      * @param id Identifier to delete
      */
@@ -207,6 +272,25 @@ public interface DataLayerYschool {
      ExamType getExamType(final Integer id);  
 
     /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (Grade obj) directly
+     * @param id Identifier to delete
+     */
+    void deleteGrade(final Integer id);
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a Grade object
+     */
+    Grade loadGrade(final Integer id);
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     Grade getGrade(final Integer id);  
+
+    /** Deletes an object of a given Id. 
      * Will load the object internally so consider using delete (Marks obj) directly
      * @param id Identifier to delete
      */
@@ -224,6 +308,44 @@ public interface DataLayerYschool {
      * @return An object of type T
      */
      Marks getMarks(final Integer id);  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (Module obj) directly
+     * @param id Identifier to delete
+     */
+    void deleteModule(final Integer id);
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a Module object
+     */
+    Module loadModule(final Integer id);
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     Module getModule(final Integer id);  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (Results obj) directly
+     * @param id Identifier to delete
+     */
+    void deleteResults(final Integer id);
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a Results object
+     */
+    Results loadResults(final Integer id);
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     Results getResults(final Integer id);  
 
     /** Deletes an object of a given Id. 
      * Will load the object internally so consider using delete (Role obj) directly
@@ -378,23 +500,61 @@ public interface DataLayerYschool {
      Student getStudent(final Integer id);  
 
     /** Deletes an object of a given Id. 
-     * Will load the object internally so consider using delete (StudentClassSubject obj) directly
+     * Will load the object internally so consider using delete (StudentClassroomModule obj) directly
      * @param id Identifier to delete
      */
-    void deleteStudentClassSubject(final Integer id);
+    void deleteStudentClassroomModule(final Integer id);
 	
     /**
      * Loads the given Object.
      * @param id Identifier to load
-     * @return a StudentClassSubject object
+     * @return a StudentClassroomModule object
      */
-    StudentClassSubject loadStudentClassSubject(final Integer id);
+    StudentClassroomModule loadStudentClassroomModule(final Integer id);
     /**
      * Loads the given Object.
      * @param id Id to load
      * @return An object of type T
      */
-     StudentClassSubject getStudentClassSubject(final Integer id);  
+     StudentClassroomModule getStudentClassroomModule(final Integer id);  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (StudentGeneralexamProfile obj) directly
+     * @param id Identifier to delete
+     */
+    void deleteStudentGeneralexamProfile(final Integer id);
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a StudentGeneralexamProfile object
+     */
+    StudentGeneralexamProfile loadStudentGeneralexamProfile(final Integer id);
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     StudentGeneralexamProfile getStudentGeneralexamProfile(final Integer id);  
+
+    /** Deletes an object of a given Id. 
+     * Will load the object internally so consider using delete (StudentSync obj) directly
+     * @param id Identifier to delete
+     */
+    void deleteStudentSync(final Integer id);
+	
+    /**
+     * Loads the given Object.
+     * @param id Identifier to load
+     * @return a StudentSync object
+     */
+    StudentSync loadStudentSync(final Integer id);
+    /**
+     * Loads the given Object.
+     * @param id Id to load
+     * @return An object of type T
+     */
+     StudentSync getStudentSync(final Integer id);  
 
     /** Deletes an object of a given Id. 
      * Will load the object internally so consider using delete (Subject obj) directly

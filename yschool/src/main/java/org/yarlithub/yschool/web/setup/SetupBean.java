@@ -1,20 +1,16 @@
 package org.yarlithub.yschool.web.setup;
 
 import org.apache.log4j.Logger;
+import org.apache.myfaces.custom.fileupload.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.yarlithub.yschool.service.SetupService;
-import org.yarlithub.yschool.web.util.InitialDateLoaderUtil;
+import org.yarlithub.yschool.service.InitService;
+import org.yarlithub.yschool.web.commons.ErrorBean;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.context.FacesContext;
-import java.io.IOException;
 import java.io.Serializable;
 
-import org.apache.myfaces.custom.fileupload.UploadedFile;
 /**
  * Created with IntelliJ IDEA.
  * User: jaykrish
@@ -50,9 +46,8 @@ public class SetupBean implements Serializable {
     private String initDocPath;
     private UploadedFile initFile;
     @Autowired
-    private SetupService setupService;
-    @ManagedProperty(value = "#{initialDateLoaderUtil}")
-    private InitialDateLoaderUtil initialDateLoaderUtil;
+    private InitService initService;
+
 
     public SetupBean() {
         logger.info("initiating a new setup bean");
@@ -157,22 +152,28 @@ public class SetupBean implements Serializable {
         this.initDocPath = initDocPath;
     }
 
-    public String enterSetup() throws IOException {
-        logger.info("Entering into first time ySchool setup");
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "setting up now.", null));
+    public String enterSetup() {
+        boolean setupResult = false;
+        try {
+            logger.info("Entering into first time ySchool setup");
 
-        boolean setupResult = setupService.ySchoolSetUP(userName, usereMail, password, schoolName, schoolAddress, schoolZone, schoolDistrict,
-                schoolProvience, initFile);
-        if (setupResult) {
-            //navigates to home page.(see faces-config.xml)
-            return "success";
+            setupResult = initService.ySchoolSetUP(userName, usereMail, password, schoolName, schoolAddress, schoolZone, schoolDistrict,
+                    schoolProvience, initFile);
+            if (setupResult) {
+                logger.info("Setup Success");
+                //navigates to home page.(see faces-config.xml)
+                return "success";
+            }
+        } catch (Exception e) {
+            logger.info("setup failure \n"+e);
+            ErrorBean errorBean = new ErrorBean();
+            errorBean.setErrorMessage(e.toString());
+            return "failure";
+//        } finally {
+//            //shows error page.
+//            return "failure";
         }
-        //shows error page.
-        return "failure";
+          return null;
     }
 
-    public void setInitialDateLoaderUtil(InitialDateLoaderUtil initialDateLoaderUtil) {
-        this.initialDateLoaderUtil = initialDateLoaderUtil;
-    }
 }

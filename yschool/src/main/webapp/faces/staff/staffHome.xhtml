@@ -1,37 +1,96 @@
 <ui:composition template="/WEB-INF/templates/staff-layout.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+>
 
-<ui:define name="student-content">
+    <ui:define name="yhead">
+        <title>Staff Home</title>
 
-    <div class="span4">
-        <ul class="breadcrumb">
-            <li>
-                <a href="/yschool/faces/home/myHome.xhtml">Home</a> <span class="divider">></span>
-            </li>
-            <li>
-                <a href="#">Staffs</a>
-            </li>
-        </ul>
-    </div>
+    </ui:define>
+    <ui:define name="staff-content">
 
-    <div class="span4">
-        <!--Student search bar with filter-->
-        <form class="navbar-search pull-left">
-            <input type="text" class="search-query" placeholder="Search"> </input>
-        </form>
-    </div>
+        <div class="col-md-8">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yschool/faces/home/myHome.xhtml">Home</a>
+                </li>
+                <li class="active">
+                    <a href="#">Staffs</a>
+                </li>
+            </ol>
+        </div>
 
-    <div class="span2">
-        <!--Add new student Button-->
-        <a href="/yschool/faces/staff/staffNew.xhtml">
-            <Button class="btn btn-primary btn-large"> Add New Staff</Button>
-        </a>
-    </div>
+        <div class="col-md-4">
+            <!--Add new student Button-->
+            <a href="/yschool/faces/staff/staffNew.xhtml">
+                <Button class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add New Staff
+                </Button>
+            </a>
+        </div>
+        <div class="col-md-8 col-lg-offset-2">
+                <p>Staff Search....</p>
+            <h:form>
+                <div class="form-group">
+                    <div class="col-md-7">
+                        <h:inputText id="staffName" value="#{staffBean.searchKey}" class="form-control">
+                            <p:ajax event="keypress" listener="#{staffBean.viewStaffAjax}" update="suggest_box"></p:ajax>
+                        </h:inputText>
+                    </div>
+                    <h:commandButton value="Search" styleClass="btn btn-success"   type="submit" action="#{staffBean.viewStaffAjax}">
 
-    <div class="span10">
-        test Staff home.
-    </div>
-</ui:define>
+                    </h:commandButton>
+                </div>
+
+                <h:panelGroup id="suggest_box">
+                <ui:fragment rendered="#{staffBean.staffsSearchResultAjax.rowAvailable}">
+                <ui:repeat value="#{staffBean.staffsSearchResultAjax}" var="staff">
+                <h:form class="col-md-7"> <h:commandLink value="#{staff.name}" action="#{staffBean.viewStaffAjax}"
+                styleClass=" thumbnail" type="submit">
+                </h:commandLink>  </h:form>
+
+                </ui:repeat>
+
+                </ui:fragment>
+
+                </h:panelGroup>
+            </h:form>
+        </div>
+        <div class="col-md-8">
+            <div class="row" id="staff-home-contents">
+
+                <div>
+                    <h:form>
+                        <h:dataTable value="#{staffHomeBean.staffDataModel}" var="staff"
+                                     styleClass="table table-hover">
+                            <h:column>
+                                <div>
+                                    <img src="/yschool/ico/staff-small.png" class="img-circle"></img>
+                                </div>
+
+                            </h:column>
+                            <h:column>
+                                <!-- column header -->
+                                <f:facet name="header">Staffs </f:facet>
+                                #{staff.fullName}
+                                <br/>
+                                Staff ID: #{staff.staffid}
+                            </h:column>
+
+                            <h:column>
+                                <h:commandButton value="View" action="#{staffHomeBean.viewStaff}" type="submit"
+                                                 styleClass="btn btn-default"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
 
 </ui:composition>

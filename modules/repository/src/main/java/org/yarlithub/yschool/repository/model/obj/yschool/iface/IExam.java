@@ -1,9 +1,11 @@
 package org.yarlithub.yschool.repository.model.obj.yschool.iface;
 import java.util.Date;
 import java.util.Set;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubject;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomModule;
+import org.yarlithub.yschool.repository.model.obj.yschool.ExamSync;
 import org.yarlithub.yschool.repository.model.obj.yschool.ExamType;
 import org.yarlithub.yschool.repository.model.obj.yschool.Marks;
+import org.yarlithub.yschool.repository.model.obj.yschool.Results;
 
 
 /** 
@@ -16,18 +18,18 @@ public interface IExam {
 
 
     /**
-     * Return the value associated with the column: classSubjectIdclassSubject.
-	 * @return A ClassSubject object (this.classSubjectIdclassSubject)
+     * Return the value associated with the column: classroomModuleIdclassroomModule.
+	 * @return A ClassroomModule object (this.classroomModuleIdclassroomModule)
 	 */
-	ClassSubject getClassSubjectIdclassSubject();
+	ClassroomModule getClassroomModuleIdclassroomModule();
 	
 
   
     /**  
-     * Set the value related to the column: classSubjectIdclassSubject.
-	 * @param classSubjectIdclassSubject the classSubjectIdclassSubject value you wish to set
+     * Set the value related to the column: classroomModuleIdclassroomModule.
+	 * @param classroomModuleIdclassroomModule the classroomModuleIdclassroomModule value you wish to set
 	 */
-	void setClassSubjectIdclassSubject(final ClassSubject classSubjectIdclassSubject);
+	void setClassroomModuleIdclassroomModule(final ClassroomModule classroomModuleIdclassroomModule);
 
     /**
      * Return the value associated with the column: date.
@@ -42,6 +44,25 @@ public interface IExam {
 	 * @param date the date value you wish to set
 	 */
 	void setDate(final Date date);
+
+    /**
+     * Return the value associated with the column: examSync.
+	 * @return A Set&lt;ExamSync&gt; object (this.examSync)
+	 */
+	Set<ExamSync> getExamSyncs();
+	
+	/**
+	 * Adds a bi-directional link of type ExamSync to the examSyncs set.
+	 * @param examSync item to add
+	 */
+	void addExamSync(ExamSync examSync);
+
+  
+    /**  
+     * Set the value related to the column: examSync.
+	 * @param examSync the examSync value you wish to set
+	 */
+	void setExamSyncs(final Set<ExamSync> examSync);
 
     /**
      * Return the value associated with the column: examTypeIdexamType.
@@ -91,6 +112,39 @@ public interface IExam {
 	void setMarkss(final Set<Marks> marks);
 
     /**
+     * Return the value associated with the column: modifiedTime.
+	 * @return A Date object (this.modifiedTime)
+	 */
+	Date getModifiedTime();
+	
+
+  
+    /**  
+     * Set the value related to the column: modifiedTime.
+	 * @param modifiedTime the modifiedTime value you wish to set
+	 */
+	void setModifiedTime(final Date modifiedTime);
+
+    /**
+     * Return the value associated with the column: results.
+	 * @return A Set&lt;Results&gt; object (this.results)
+	 */
+	Set<Results> getResultss();
+	
+	/**
+	 * Adds a bi-directional link of type Results to the resultss set.
+	 * @param results item to add
+	 */
+	void addResults(Results results);
+
+  
+    /**  
+     * Set the value related to the column: results.
+	 * @param results the results value you wish to set
+	 */
+	void setResultss(final Set<Results> results);
+
+    /**
      * Return the value associated with the column: term.
 	 * @return A Integer object (this.term)
 	 */
@@ -103,20 +157,6 @@ public interface IExam {
 	 * @param term the term value you wish to set
 	 */
 	void setTerm(final Integer term);
-
-    /**
-     * Return the value associated with the column: year.
-	 * @return A Date object (this.year)
-	 */
-	Date getYear();
-	
-
-  
-    /**  
-     * Set the value related to the column: year.
-	 * @param year the year value you wish to set
-	 */
-	void setYear(final Date year);
 
 	// end of interface
 }

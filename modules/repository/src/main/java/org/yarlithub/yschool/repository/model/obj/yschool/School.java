@@ -3,6 +3,7 @@ package org.yarlithub.yschool.repository.model.obj.yschool;
 import com.felees.hbnpojogen.persistence.IPojoGenEntity;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.proxy.HibernateProxy;
+import org.yarlithub.yschool.repository.model.obj.yschool.SchoolHasStaffHasRole;
 import org.yarlithub.yschool.repository.model.obj.yschool.iface.ISchool;
 
 
@@ -32,7 +34,7 @@ import org.yarlithub.yschool.repository.model.obj.yschool.iface.ISchool;
 public class School implements Cloneable, Serializable, IPojoGenEntity, ISchool {
 
 	/** Serial Version UID. */
-	private static final long serialVersionUID = -559009387L;
+	private static final long serialVersionUID = -558977421L;
 
 	/** Use a WeakHashMap so entries will be garbage collected once all entities 
 		referring to a saved hash are garbage collected themselves. */
@@ -46,9 +48,13 @@ public class School implements Cloneable, Serializable, IPojoGenEntity, ISchool 
 	/** Field mapping. */
 	private String address;
 	/** Field mapping. */
+	private String appKey;
+	/** Field mapping. */
 	private String district;
 	/** Field mapping. */
 	private Integer id = 0; // init for hibernate bug workaround
+	/** Field mapping. */
+	private Date modifiedTime;
 	/** Field mapping. */
 	private String name;
 	/** Field mapping. */
@@ -56,6 +62,8 @@ public class School implements Cloneable, Serializable, IPojoGenEntity, ISchool 
 	/** Field mapping. */
 	private Set<SchoolHasStaffHasRole> schoolHasStaffHasRoles = new HashSet<SchoolHasStaffHasRole>();
 
+	/** Field mapping. */
+	private Integer schoolNo;
 	/** Field mapping. */
 	private String zone;
 	/**
@@ -74,11 +82,13 @@ public class School implements Cloneable, Serializable, IPojoGenEntity, ISchool 
 	
 	/** Constructor taking a given ID.
 	 * @param id Integer object;
+	 * @param modifiedTime Date object;
 	 * @param name String object;
 	 */
-	public School(Integer id, String name) {
+	public School(Integer id, Date modifiedTime, String name) {
 
 		this.id = id;
+		this.modifiedTime = modifiedTime;
 		this.name = name;
 	}
 	
@@ -114,6 +124,27 @@ public class School implements Cloneable, Serializable, IPojoGenEntity, ISchool 
 	 */
 	public void setAddress(final String address) {
 		this.address = address;
+	}
+
+    /**
+     * Return the value associated with the column: appKey.
+	 * @return A String object (this.appKey)
+	 */
+	@Basic( optional = true )
+	@Column( name = "app_key", length = 45  )
+	public String getAppKey() {
+		return this.appKey;
+		
+	}
+	
+
+  
+    /**  
+     * Set the value related to the column: appKey.
+	 * @param appKey the appKey value you wish to set
+	 */
+	public void setAppKey(final String appKey) {
+		this.appKey = appKey;
 	}
 
     /**
@@ -166,6 +197,27 @@ public class School implements Cloneable, Serializable, IPojoGenEntity, ISchool 
 		SAVED_HASHES.put( id, this.hashCode );
 		}
 		this.id = id;
+	}
+
+    /**
+     * Return the value associated with the column: modifiedTime.
+	 * @return A Date object (this.modifiedTime)
+	 */
+	@Basic( optional = false )
+	@Column( name = "modified_time", nullable = false  )
+	public Date getModifiedTime() {
+		return this.modifiedTime;
+		
+	}
+	
+
+  
+    /**  
+     * Set the value related to the column: modifiedTime.
+	 * @param modifiedTime the modifiedTime value you wish to set
+	 */
+	public void setModifiedTime(final Date modifiedTime) {
+		this.modifiedTime = modifiedTime;
 	}
 
     /**
@@ -242,6 +294,27 @@ public class School implements Cloneable, Serializable, IPojoGenEntity, ISchool 
 	}
 
     /**
+     * Return the value associated with the column: schoolNo.
+	 * @return A Integer object (this.schoolNo)
+	 */
+	@Basic( optional = true )
+	@Column( name = "school_no"  )
+	public Integer getSchoolNo() {
+		return this.schoolNo;
+		
+	}
+	
+
+  
+    /**  
+     * Set the value related to the column: schoolNo.
+	 * @param schoolNo the schoolNo value you wish to set
+	 */
+	public void setSchoolNo(final Integer schoolNo) {
+		this.schoolNo = schoolNo;
+	}
+
+    /**
      * Return the value associated with the column: zone.
 	 * @return A String object (this.zone)
 	 */
@@ -274,13 +347,16 @@ public class School implements Cloneable, Serializable, IPojoGenEntity, ISchool 
         final School copy = (School)super.clone();
 
 		copy.setAddress(this.getAddress());
+		copy.setAppKey(this.getAppKey());
 		copy.setDistrict(this.getDistrict());
 		copy.setId(this.getId());
+		copy.setModifiedTime(this.getModifiedTime());
 		copy.setName(this.getName());
 		copy.setProvince(this.getProvince());
 		if (this.getSchoolHasStaffHasRoles() != null) {
 			copy.getSchoolHasStaffHasRoles().addAll(this.getSchoolHasStaffHasRoles());
 		}
+		copy.setSchoolNo(this.getSchoolNo());
 		copy.setZone(this.getZone());
 		return copy;
 	}
@@ -296,10 +372,13 @@ public class School implements Cloneable, Serializable, IPojoGenEntity, ISchool 
 		StringBuffer sb = new StringBuffer();
 		
 		sb.append("address: " + this.getAddress() + ", ");
+		sb.append("appKey: " + this.getAppKey() + ", ");
 		sb.append("district: " + this.getDistrict() + ", ");
 		sb.append("id: " + this.getId() + ", ");
+		sb.append("modifiedTime: " + this.getModifiedTime() + ", ");
 		sb.append("name: " + this.getName() + ", ");
 		sb.append("province: " + this.getProvince() + ", ");
+		sb.append("schoolNo: " + this.getSchoolNo() + ", ");
 		sb.append("zone: " + this.getZone());
 		return sb.toString();		
 	}
@@ -347,9 +426,12 @@ public class School implements Cloneable, Serializable, IPojoGenEntity, ISchool 
 		boolean result = true;
 		result = result && (((this.getId() == null) && ( that.getId() == null)) || (this.getId() != null  && this.getId().equals(that.getId())));
 		result = result && (((getAddress() == null) && (that.getAddress() == null)) || (getAddress() != null && getAddress().equals(that.getAddress())));
+		result = result && (((getAppKey() == null) && (that.getAppKey() == null)) || (getAppKey() != null && getAppKey().equals(that.getAppKey())));
 		result = result && (((getDistrict() == null) && (that.getDistrict() == null)) || (getDistrict() != null && getDistrict().equals(that.getDistrict())));
+		result = result && (((getModifiedTime() == null) && (that.getModifiedTime() == null)) || (getModifiedTime() != null && getModifiedTime().equals(that.getModifiedTime())));
 		result = result && (((getName() == null) && (that.getName() == null)) || (getName() != null && getName().equals(that.getName())));
 		result = result && (((getProvince() == null) && (that.getProvince() == null)) || (getProvince() != null && getProvince().equals(that.getProvince())));
+		result = result && (((getSchoolNo() == null) && (that.getSchoolNo() == null)) || (getSchoolNo() != null && getSchoolNo().equals(that.getSchoolNo())));
 		result = result && (((getZone() == null) && (that.getZone() == null)) || (getZone() != null && getZone().equals(that.getZone())));
 		return result;
 	}

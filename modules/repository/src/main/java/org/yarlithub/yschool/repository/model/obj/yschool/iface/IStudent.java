@@ -1,8 +1,11 @@
 package org.yarlithub.yschool.repository.model.obj.yschool.iface;
 import java.util.Date;
 import java.util.Set;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassStudent;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomStudent;
 import org.yarlithub.yschool.repository.model.obj.yschool.Marks;
+import org.yarlithub.yschool.repository.model.obj.yschool.Results;
+import org.yarlithub.yschool.repository.model.obj.yschool.StudentGeneralexamProfile;
+import org.yarlithub.yschool.repository.model.obj.yschool.StudentSync;
 
 
 /** 
@@ -13,20 +16,6 @@ import org.yarlithub.yschool.repository.model.obj.yschool.Marks;
 public interface IStudent {
 
 
-
-    /**
-     * Return the value associated with the column: addmisionNo.
-	 * @return A String object (this.addmisionNo)
-	 */
-	String getAddmisionNo();
-	
-
-  
-    /**  
-     * Set the value related to the column: addmisionNo.
-	 * @param addmisionNo the addmisionNo value you wish to set
-	 */
-	void setAddmisionNo(final String addmisionNo);
 
     /**
      * Return the value associated with the column: address.
@@ -43,23 +32,37 @@ public interface IStudent {
 	void setAddress(final String address);
 
     /**
-     * Return the value associated with the column: classStudent.
-	 * @return A Set&lt;ClassStudent&gt; object (this.classStudent)
+     * Return the value associated with the column: admissionNo.
+	 * @return A String object (this.admissionNo)
 	 */
-	Set<ClassStudent> getClassStudents();
+	String getAdmissionNo();
 	
-	/**
-	 * Adds a bi-directional link of type ClassStudent to the classStudents set.
-	 * @param classStudent item to add
-	 */
-	void addClassStudent(ClassStudent classStudent);
 
   
     /**  
-     * Set the value related to the column: classStudent.
-	 * @param classStudent the classStudent value you wish to set
+     * Set the value related to the column: admissionNo.
+	 * @param admissionNo the admissionNo value you wish to set
 	 */
-	void setClassStudents(final Set<ClassStudent> classStudent);
+	void setAdmissionNo(final String admissionNo);
+
+    /**
+     * Return the value associated with the column: classroomStudent.
+	 * @return A Set&lt;ClassroomStudent&gt; object (this.classroomStudent)
+	 */
+	Set<ClassroomStudent> getClassroomStudents();
+	
+	/**
+	 * Adds a bi-directional link of type ClassroomStudent to the classroomStudents set.
+	 * @param classroomStudent item to add
+	 */
+	void addClassroomStudent(ClassroomStudent classroomStudent);
+
+  
+    /**  
+     * Set the value related to the column: classroomStudent.
+	 * @param classroomStudent the classroomStudent value you wish to set
+	 */
+	void setClassroomStudents(final Set<ClassroomStudent> classroomStudent);
 
     /**
      * Return the value associated with the column: dob.
@@ -137,6 +140,20 @@ public interface IStudent {
 	void setMarkss(final Set<Marks> marks);
 
     /**
+     * Return the value associated with the column: modifiedTime.
+	 * @return A Date object (this.modifiedTime)
+	 */
+	Date getModifiedTime();
+	
+
+  
+    /**  
+     * Set the value related to the column: modifiedTime.
+	 * @param modifiedTime the modifiedTime value you wish to set
+	 */
+	void setModifiedTime(final Date modifiedTime);
+
+    /**
      * Return the value associated with the column: name.
 	 * @return A String object (this.name)
 	 */
@@ -177,6 +194,63 @@ public interface IStudent {
 	 * @param photo the photo value you wish to set
 	 */
 	void setPhoto(final Byte[] photo);
+
+    /**
+     * Return the value associated with the column: results.
+	 * @return A Set&lt;Results&gt; object (this.results)
+	 */
+	Set<Results> getResultss();
+	
+	/**
+	 * Adds a bi-directional link of type Results to the resultss set.
+	 * @param results item to add
+	 */
+	void addResults(Results results);
+
+  
+    /**  
+     * Set the value related to the column: results.
+	 * @param results the results value you wish to set
+	 */
+	void setResultss(final Set<Results> results);
+
+    /**
+     * Return the value associated with the column: studentGeneralexamProfile.
+	 * @return A Set&lt;StudentGeneralexamProfile&gt; object (this.studentGeneralexamProfile)
+	 */
+	Set<StudentGeneralexamProfile> getStudentGeneralexamProfiles();
+	
+	/**
+	 * Adds a bi-directional link of type StudentGeneralexamProfile to the studentGeneralexamProfiles set.
+	 * @param studentGeneralexamProfile item to add
+	 */
+	void addStudentGeneralexamProfile(StudentGeneralexamProfile studentGeneralexamProfile);
+
+  
+    /**  
+     * Set the value related to the column: studentGeneralexamProfile.
+	 * @param studentGeneralexamProfile the studentGeneralexamProfile value you wish to set
+	 */
+	void setStudentGeneralexamProfiles(final Set<StudentGeneralexamProfile> studentGeneralexamProfile);
+
+    /**
+     * Return the value associated with the column: studentSync.
+	 * @return A Set&lt;StudentSync&gt; object (this.studentSync)
+	 */
+	Set<StudentSync> getStudentSyncs();
+	
+	/**
+	 * Adds a bi-directional link of type StudentSync to the studentSyncs set.
+	 * @param studentSync item to add
+	 */
+	void addStudentSync(StudentSync studentSync);
+
+  
+    /**  
+     * Set the value related to the column: studentSync.
+	 * @param studentSync the studentSync value you wish to set
+	 */
+	void setStudentSyncs(final Set<StudentSync> studentSync);
 
 	// end of interface
 }

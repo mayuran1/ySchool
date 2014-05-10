@@ -22,6 +22,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.proxy.HibernateProxy;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomHasStaffHasRole;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomModule;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomStudent;
 import org.yarlithub.yschool.repository.model.obj.yschool.iface.IClassroom;
 
 
@@ -35,7 +38,7 @@ import org.yarlithub.yschool.repository.model.obj.yschool.iface.IClassroom;
 public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClassroom {
 
 	/** Serial Version UID. */
-	private static final long serialVersionUID = -559009400L;
+	private static final long serialVersionUID = -558977440L;
 
 	/** Use a WeakHashMap so entries will be garbage collected once all entities 
 		referring to a saved hash are garbage collected themselves. */
@@ -50,21 +53,23 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
 	private Set<ClassroomHasStaffHasRole> classroomHasStaffHasRoles = new HashSet<ClassroomHasStaffHasRole>();
 
 	/** Field mapping. */
-	private Set<ClassStudent> classStudents = new HashSet<ClassStudent>();
+	private Set<ClassroomModule> classroomModules = new HashSet<ClassroomModule>();
 
 	/** Field mapping. */
-	private Set<ClassSubject> classSubjects = new HashSet<ClassSubject>();
+	private Set<ClassroomStudent> classroomStudents = new HashSet<ClassroomStudent>();
 
 	/** Field mapping. */
-	private String division;
+	private Division divisionIddivision;
 	/** Field mapping. */
-	private Integer grade;
+	private Grade gradeIdgrade;
 	/** Field mapping. */
 	private Integer id = 0; // init for hibernate bug workaround
 	/** Field mapping. */
+	private Date modifiedTime;
+	/** Field mapping. */
 	private Section sectionIdsection;
 	/** Field mapping. */
-	private Date year;
+	private Integer year;
 	/**
 	 * Default constructor, mainly for hibernate use.
 	 */
@@ -80,17 +85,19 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
 	}
 	
 	/** Constructor taking a given ID.
-	 * @param division String object;
-	 * @param grade Integer object;
+	 * @param divisionIddivision Division object;
+	 * @param gradeIdgrade Grade object;
 	 * @param id Integer object;
-	 * @param year Date object;
+	 * @param modifiedTime Date object;
+	 * @param year Integer object;
 	 */
-	public Classroom(String division, Integer grade, Integer id, 					
-			Date year) {
+	public Classroom(Division divisionIddivision, Grade gradeIdgrade, Integer id, 					
+			Date modifiedTime, Integer year) {
 
-		this.division = division;
-		this.grade = grade;
+		this.divisionIddivision = divisionIddivision;
+		this.gradeIdgrade = gradeIdgrade;
 		this.id = id;
+		this.modifiedTime = modifiedTime;
 		this.year = year;
 	}
 	
@@ -111,7 +118,7 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
      * Return the value associated with the column: classroomHasStaffHasRole.
 	 * @return A Set&lt;ClassroomHasStaffHasRole&gt; object (this.classroomHasStaffHasRole)
 	 */
- 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "id.classroomIdclass"  )
+ 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "id.classroomIdclassroom"  )
  	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
 	@Column( nullable = false  )
@@ -125,7 +132,7 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
 	 * @param classroomHasStaffHasRole item to add
 	 */
 	public void addClassroomHasStaffHasRole(ClassroomHasStaffHasRole classroomHasStaffHasRole) {
-		classroomHasStaffHasRole.getId().setClassroomIdclass(this);
+		classroomHasStaffHasRole.getId().setClassroomIdclassroom(this);
 		this.classroomHasStaffHasRoles.add(classroomHasStaffHasRole);
 	}
 
@@ -139,107 +146,111 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
 	}
 
     /**
-     * Return the value associated with the column: classStudent.
-	 * @return A Set&lt;ClassStudent&gt; object (this.classStudent)
+     * Return the value associated with the column: classroomModule.
+	 * @return A Set&lt;ClassroomModule&gt; object (this.classroomModule)
 	 */
- 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "classIdclass"  )
+ 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "classroomIdclassroom"  )
  	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
 	@Column( nullable = false  )
-	public Set<ClassStudent> getClassStudents() {
-		return this.classStudents;
+	public Set<ClassroomModule> getClassroomModules() {
+		return this.classroomModules;
 		
 	}
 	
 	/**
-	 * Adds a bi-directional link of type ClassStudent to the classStudents set.
-	 * @param classStudent item to add
+	 * Adds a bi-directional link of type ClassroomModule to the classroomModules set.
+	 * @param classroomModule item to add
 	 */
-	public void addClassStudent(ClassStudent classStudent) {
-		classStudent.setClassIdclass(this);
-		this.classStudents.add(classStudent);
+	public void addClassroomModule(ClassroomModule classroomModule) {
+		classroomModule.setClassroomIdclassroom(this);
+		this.classroomModules.add(classroomModule);
 	}
 
   
     /**  
-     * Set the value related to the column: classStudent.
-	 * @param classStudent the classStudent value you wish to set
+     * Set the value related to the column: classroomModule.
+	 * @param classroomModule the classroomModule value you wish to set
 	 */
-	public void setClassStudents(final Set<ClassStudent> classStudent) {
-		this.classStudents = classStudent;
+	public void setClassroomModules(final Set<ClassroomModule> classroomModule) {
+		this.classroomModules = classroomModule;
 	}
 
     /**
-     * Return the value associated with the column: classSubject.
-	 * @return A Set&lt;ClassSubject&gt; object (this.classSubject)
+     * Return the value associated with the column: classroomStudent.
+	 * @return A Set&lt;ClassroomStudent&gt; object (this.classroomStudent)
 	 */
- 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "classIdclass"  )
+ 	@OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "classroomIdclassroom"  )
  	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
 	@Column( nullable = false  )
-	public Set<ClassSubject> getClassSubjects() {
-		return this.classSubjects;
+	public Set<ClassroomStudent> getClassroomStudents() {
+		return this.classroomStudents;
 		
 	}
 	
 	/**
-	 * Adds a bi-directional link of type ClassSubject to the classSubjects set.
-	 * @param classSubject item to add
+	 * Adds a bi-directional link of type ClassroomStudent to the classroomStudents set.
+	 * @param classroomStudent item to add
 	 */
-	public void addClassSubject(ClassSubject classSubject) {
-		classSubject.setClassIdclass(this);
-		this.classSubjects.add(classSubject);
+	public void addClassroomStudent(ClassroomStudent classroomStudent) {
+		classroomStudent.setClassroomIdclassroom(this);
+		this.classroomStudents.add(classroomStudent);
 	}
 
   
     /**  
-     * Set the value related to the column: classSubject.
-	 * @param classSubject the classSubject value you wish to set
+     * Set the value related to the column: classroomStudent.
+	 * @param classroomStudent the classroomStudent value you wish to set
 	 */
-	public void setClassSubjects(final Set<ClassSubject> classSubject) {
-		this.classSubjects = classSubject;
+	public void setClassroomStudents(final Set<ClassroomStudent> classroomStudent) {
+		this.classroomStudents = classroomStudent;
 	}
 
     /**
-     * Return the value associated with the column: division.
-	 * @return A String object (this.division)
+     * Return the value associated with the column: divisionIddivision.
+	 * @return A Division object (this.divisionIddivision)
 	 */
+	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
-	@Column( nullable = false, length = 45  )
-	public String getDivision() {
-		return this.division;
+	@JoinColumn(name = "division_iddivision", nullable = false )
+	public Division getDivisionIddivision() {
+		return this.divisionIddivision;
 		
 	}
 	
 
   
     /**  
-     * Set the value related to the column: division.
-	 * @param division the division value you wish to set
+     * Set the value related to the column: divisionIddivision.
+	 * @param divisionIddivision the divisionIddivision value you wish to set
 	 */
-	public void setDivision(final String division) {
-		this.division = division;
+	public void setDivisionIddivision(final Division divisionIddivision) {
+		this.divisionIddivision = divisionIddivision;
 	}
 
     /**
-     * Return the value associated with the column: grade.
-	 * @return A Integer object (this.grade)
+     * Return the value associated with the column: gradeIdgrade.
+	 * @return A Grade object (this.gradeIdgrade)
 	 */
+	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
-	@Column( nullable = false  )
-	public Integer getGrade() {
-		return this.grade;
+	@JoinColumn(name = "grade_idgrade", nullable = false )
+	public Grade getGradeIdgrade() {
+		return this.gradeIdgrade;
 		
 	}
 	
 
   
     /**  
-     * Set the value related to the column: grade.
-	 * @param grade the grade value you wish to set
+     * Set the value related to the column: gradeIdgrade.
+	 * @param gradeIdgrade the gradeIdgrade value you wish to set
 	 */
-	public void setGrade(final Integer grade) {
-		this.grade = grade;
+	public void setGradeIdgrade(final Grade gradeIdgrade) {
+		this.gradeIdgrade = gradeIdgrade;
 	}
 
     /**
@@ -249,7 +260,7 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
     @Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Basic( optional = false )
-	@Column( name = "idclass", nullable = false  )
+	@Column( name = "idclassroom", nullable = false  )
 	public Integer getId() {
 		return this.id;
 		
@@ -274,13 +285,34 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
 	}
 
     /**
+     * Return the value associated with the column: modifiedTime.
+	 * @return A Date object (this.modifiedTime)
+	 */
+	@Basic( optional = false )
+	@Column( name = "modified_time", nullable = false  )
+	public Date getModifiedTime() {
+		return this.modifiedTime;
+		
+	}
+	
+
+  
+    /**  
+     * Set the value related to the column: modifiedTime.
+	 * @param modifiedTime the modifiedTime value you wish to set
+	 */
+	public void setModifiedTime(final Date modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
+
+    /**
      * Return the value associated with the column: sectionIdsection.
 	 * @return A Section object (this.sectionIdsection)
 	 */
 	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = true )
-	@JoinColumn(name = "Section_idSection", nullable = true )
+	@JoinColumn(name = "section_idsection", nullable = true )
 	public Section getSectionIdsection() {
 		return this.sectionIdsection;
 		
@@ -298,11 +330,11 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
 
     /**
      * Return the value associated with the column: year.
-	 * @return A Date object (this.year)
+	 * @return A Integer object (this.year)
 	 */
 	@Basic( optional = false )
 	@Column( nullable = false  )
-	public Date getYear() {
+	public Integer getYear() {
 		return this.year;
 		
 	}
@@ -313,7 +345,7 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
      * Set the value related to the column: year.
 	 * @param year the year value you wish to set
 	 */
-	public void setYear(final Date year) {
+	public void setYear(final Integer year) {
 		this.year = year;
 	}
 
@@ -331,15 +363,16 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
 		if (this.getClassroomHasStaffHasRoles() != null) {
 			copy.getClassroomHasStaffHasRoles().addAll(this.getClassroomHasStaffHasRoles());
 		}
-		if (this.getClassStudents() != null) {
-			copy.getClassStudents().addAll(this.getClassStudents());
+		if (this.getClassroomModules() != null) {
+			copy.getClassroomModules().addAll(this.getClassroomModules());
 		}
-		if (this.getClassSubjects() != null) {
-			copy.getClassSubjects().addAll(this.getClassSubjects());
+		if (this.getClassroomStudents() != null) {
+			copy.getClassroomStudents().addAll(this.getClassroomStudents());
 		}
-		copy.setDivision(this.getDivision());
-		copy.setGrade(this.getGrade());
+		copy.setDivisionIddivision(this.getDivisionIddivision());
+		copy.setGradeIdgrade(this.getGradeIdgrade());
 		copy.setId(this.getId());
+		copy.setModifiedTime(this.getModifiedTime());
 		copy.setSectionIdsection(this.getSectionIdsection());
 		copy.setYear(this.getYear());
 		return copy;
@@ -355,9 +388,8 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		
-		sb.append("division: " + this.getDivision() + ", ");
-		sb.append("grade: " + this.getGrade() + ", ");
 		sb.append("id: " + this.getId() + ", ");
+		sb.append("modifiedTime: " + this.getModifiedTime() + ", ");
 		sb.append("year: " + this.getYear());
 		return sb.toString();		
 	}
@@ -404,8 +436,9 @@ public class Classroom implements Cloneable, Serializable, IPojoGenEntity, IClas
 		
 		boolean result = true;
 		result = result && (((this.getId() == null) && ( that.getId() == null)) || (this.getId() != null  && this.getId().equals(that.getId())));
-		result = result && (((getDivision() == null) && (that.getDivision() == null)) || (getDivision() != null && getDivision().equals(that.getDivision())));
-		result = result && (((getGrade() == null) && (that.getGrade() == null)) || (getGrade() != null && getGrade().equals(that.getGrade())));
+		result = result && (((getDivisionIddivision() == null) && (that.getDivisionIddivision() == null)) || (getDivisionIddivision() != null && getDivisionIddivision().getId().equals(that.getDivisionIddivision().getId())));	
+		result = result && (((getGradeIdgrade() == null) && (that.getGradeIdgrade() == null)) || (getGradeIdgrade() != null && getGradeIdgrade().getId().equals(that.getGradeIdgrade().getId())));	
+		result = result && (((getModifiedTime() == null) && (that.getModifiedTime() == null)) || (getModifiedTime() != null && getModifiedTime().equals(that.getModifiedTime())));
 		result = result && (((getSectionIdsection() == null) && (that.getSectionIdsection() == null)) || (getSectionIdsection() != null && getSectionIdsection().getId().equals(that.getSectionIdsection().getId())));	
 		result = result && (((getYear() == null) && (that.getYear() == null)) || (getYear() != null && getYear().equals(that.getYear())));
 		return result;

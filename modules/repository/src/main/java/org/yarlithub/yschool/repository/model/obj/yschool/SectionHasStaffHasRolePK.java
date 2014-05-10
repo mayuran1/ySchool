@@ -1,5 +1,6 @@
 package org.yarlithub.yschool.repository.model.obj.yschool;
 
+import com.felees.hbnpojogen.persistence.IPojoGenEntity;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ import org.yarlithub.yschool.repository.model.obj.yschool.iface.ISectionHasStaff
 public class SectionHasStaffHasRolePK implements Cloneable, Serializable,  ISectionHasStaffHasRolePK {
 
 	/** Serial Version UID. */
-	private static final long serialVersionUID = -559009380L;
+	private static final long serialVersionUID = -558977414L;
 
 	
 
@@ -28,14 +29,14 @@ public class SectionHasStaffHasRolePK implements Cloneable, Serializable,  ISect
 	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
-	@JoinColumn(name = "Section_idSection", nullable = false , insertable = false, updatable = false )
+	@JoinColumn(name = "section_idsection", nullable = false , insertable = false, updatable = false )
 	private Section sectionIdsection;
 
 	/** Field mapping. */
 	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
-	@JoinColumn(name = "Staff_has_Role_idStaff_has_role", nullable = false , insertable = false, updatable = false )
+	@JoinColumn(name = "staff_has_role_idstaff_has_role", nullable = false , insertable = false, updatable = false )
 	private StaffHasRole staffHasRoleIdstaffHasRole;
 
  

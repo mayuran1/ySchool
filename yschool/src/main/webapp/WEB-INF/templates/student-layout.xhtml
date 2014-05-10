@@ -2,16 +2,16 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="ybody-content">
-        <div class="row-fluid">
+        <div class="row" style="margin-top: 20px;">
             <ui:include src="/WEB-INF/templates/sidebar.xhtml"></ui:include>
-            <!--TODO: show sidebar active links-->
-            <!--<script type="text/javascript">-->
-            <!--makeLinkActive("analytics");-->
-            <!--</script>-->
-
-            <ui:insert name="student-content">
-                Default Student Content student layout.
-            </ui:insert>
+            <script>
+                makeSidebarActive('sidebar-student-thumbnail');
+            </script>
+            <div class="container col-md-10">
+                <ui:insert name="student-content">
+                    Default Student Content from student-layout.
+                </ui:insert>
+            </div>
         </div>
         <!--row-fluid-->
     </ui:define>

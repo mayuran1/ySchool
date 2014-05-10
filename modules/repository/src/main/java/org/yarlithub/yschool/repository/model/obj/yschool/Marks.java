@@ -3,6 +3,7 @@ package org.yarlithub.yschool.repository.model.obj.yschool;
 import com.felees.hbnpojogen.persistence.IPojoGenEntity;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.WeakHashMap;
 import javax.persistence.Basic;
@@ -31,7 +32,7 @@ import org.yarlithub.yschool.repository.model.obj.yschool.iface.IMarks;
 public class Marks implements Cloneable, Serializable, IPojoGenEntity, IMarks {
 
 	/** Serial Version UID. */
-	private static final long serialVersionUID = -559009389L;
+	private static final long serialVersionUID = -558977425L;
 
 	/** Use a WeakHashMap so entries will be garbage collected once all entities 
 		referring to a saved hash are garbage collected themselves. */
@@ -47,7 +48,11 @@ public class Marks implements Cloneable, Serializable, IPojoGenEntity, IMarks {
 	/** Field mapping. */
 	private Integer id = 0; // init for hibernate bug workaround
 	/** Field mapping. */
+	private Integer isabsent;
+	/** Field mapping. */
 	private Double marks;
+	/** Field mapping. */
+	private Date modifiedTime;
 	/** Field mapping. */
 	private Student studentIdstudent;
 	/**
@@ -67,12 +72,17 @@ public class Marks implements Cloneable, Serializable, IPojoGenEntity, IMarks {
 	/** Constructor taking a given ID.
 	 * @param examIdexam Exam object;
 	 * @param id Integer object;
+	 * @param isabsent Integer object;
+	 * @param modifiedTime Date object;
 	 * @param studentIdstudent Student object;
 	 */
-	public Marks(Exam examIdexam, Integer id, Student studentIdstudent) {
+	public Marks(Exam examIdexam, Integer id, Integer isabsent, 					
+			Date modifiedTime, Student studentIdstudent) {
 
 		this.examIdexam = examIdexam;
 		this.id = id;
+		this.isabsent = isabsent;
+		this.modifiedTime = modifiedTime;
 		this.studentIdstudent = studentIdstudent;
 	}
 	
@@ -96,7 +106,7 @@ public class Marks implements Cloneable, Serializable, IPojoGenEntity, IMarks {
 	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
-	@JoinColumn(name = "Exam_idExam", nullable = false )
+	@JoinColumn(name = "exam_idexam", nullable = false )
 	public Exam getExamIdexam() {
 		return this.examIdexam;
 		
@@ -144,6 +154,27 @@ public class Marks implements Cloneable, Serializable, IPojoGenEntity, IMarks {
 	}
 
     /**
+     * Return the value associated with the column: isabsent.
+	 * @return A Integer object (this.isabsent)
+	 */
+	@Basic( optional = false )
+	@Column( nullable = false  )
+	public Integer getIsabsent() {
+		return this.isabsent;
+		
+	}
+	
+
+  
+    /**  
+     * Set the value related to the column: isabsent.
+	 * @param isabsent the isabsent value you wish to set
+	 */
+	public void setIsabsent(final Integer isabsent) {
+		this.isabsent = isabsent;
+	}
+
+    /**
      * Return the value associated with the column: marks.
 	 * @return A Double object (this.marks)
 	 */
@@ -163,13 +194,34 @@ public class Marks implements Cloneable, Serializable, IPojoGenEntity, IMarks {
 	}
 
     /**
+     * Return the value associated with the column: modifiedTime.
+	 * @return A Date object (this.modifiedTime)
+	 */
+	@Basic( optional = false )
+	@Column( name = "modified_time", nullable = false  )
+	public Date getModifiedTime() {
+		return this.modifiedTime;
+		
+	}
+	
+
+  
+    /**  
+     * Set the value related to the column: modifiedTime.
+	 * @param modifiedTime the modifiedTime value you wish to set
+	 */
+	public void setModifiedTime(final Date modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
+
+    /**
      * Return the value associated with the column: studentIdstudent.
 	 * @return A Student object (this.studentIdstudent)
 	 */
 	@ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY )
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@Basic( optional = false )
-	@JoinColumn(name = "Student_idStudent", nullable = false )
+	@JoinColumn(name = "student_idstudent", nullable = false )
 	public Student getStudentIdstudent() {
 		return this.studentIdstudent;
 		
@@ -198,7 +250,9 @@ public class Marks implements Cloneable, Serializable, IPojoGenEntity, IMarks {
 
 		copy.setExamIdexam(this.getExamIdexam());
 		copy.setId(this.getId());
+		copy.setIsabsent(this.getIsabsent());
 		copy.setMarks(this.getMarks());
+		copy.setModifiedTime(this.getModifiedTime());
 		copy.setStudentIdstudent(this.getStudentIdstudent());
 		return copy;
 	}
@@ -214,7 +268,9 @@ public class Marks implements Cloneable, Serializable, IPojoGenEntity, IMarks {
 		StringBuffer sb = new StringBuffer();
 		
 		sb.append("id: " + this.getId() + ", ");
+		sb.append("isabsent: " + this.getIsabsent() + ", ");
 		sb.append("marks: " + this.getMarks() + ", ");
+		sb.append("modifiedTime: " + this.getModifiedTime() + ", ");
 		return sb.toString();		
 	}
 
@@ -261,7 +317,9 @@ public class Marks implements Cloneable, Serializable, IPojoGenEntity, IMarks {
 		boolean result = true;
 		result = result && (((this.getId() == null) && ( that.getId() == null)) || (this.getId() != null  && this.getId().equals(that.getId())));
 		result = result && (((getExamIdexam() == null) && (that.getExamIdexam() == null)) || (getExamIdexam() != null && getExamIdexam().getId().equals(that.getExamIdexam().getId())));	
+		result = result && (((getIsabsent() == null) && (that.getIsabsent() == null)) || (getIsabsent() != null && getIsabsent().equals(that.getIsabsent())));
 		result = result && (((getMarks() == null) && (that.getMarks() == null)) || (getMarks() != null && getMarks().equals(that.getMarks())));
+		result = result && (((getModifiedTime() == null) && (that.getModifiedTime() == null)) || (getModifiedTime() != null && getModifiedTime().equals(that.getModifiedTime())));
 		result = result && (((getStudentIdstudent() == null) && (that.getStudentIdstudent() == null)) || (getStudentIdstudent() != null && getStudentIdstudent().getId().equals(that.getStudentIdstudent().getId())));	
 		return result;
 	}

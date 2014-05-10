@@ -1,9 +1,11 @@
 package org.yarlithub.yschool.repository.model.obj.yschool.iface;
 import java.util.Date;
 import java.util.Set;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassStudent;
-import org.yarlithub.yschool.repository.model.obj.yschool.ClassSubject;
 import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomHasStaffHasRole;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomModule;
+import org.yarlithub.yschool.repository.model.obj.yschool.ClassroomStudent;
+import org.yarlithub.yschool.repository.model.obj.yschool.Division;
+import org.yarlithub.yschool.repository.model.obj.yschool.Grade;
 import org.yarlithub.yschool.repository.model.obj.yschool.Section;
 
 
@@ -36,70 +38,70 @@ public interface IClassroom {
 	void setClassroomHasStaffHasRoles(final Set<ClassroomHasStaffHasRole> classroomHasStaffHasRole);
 
     /**
-     * Return the value associated with the column: classStudent.
-	 * @return A Set&lt;ClassStudent&gt; object (this.classStudent)
+     * Return the value associated with the column: classroomModule.
+	 * @return A Set&lt;ClassroomModule&gt; object (this.classroomModule)
 	 */
-	Set<ClassStudent> getClassStudents();
+	Set<ClassroomModule> getClassroomModules();
 	
 	/**
-	 * Adds a bi-directional link of type ClassStudent to the classStudents set.
-	 * @param classStudent item to add
+	 * Adds a bi-directional link of type ClassroomModule to the classroomModules set.
+	 * @param classroomModule item to add
 	 */
-	void addClassStudent(ClassStudent classStudent);
+	void addClassroomModule(ClassroomModule classroomModule);
 
   
     /**  
-     * Set the value related to the column: classStudent.
-	 * @param classStudent the classStudent value you wish to set
+     * Set the value related to the column: classroomModule.
+	 * @param classroomModule the classroomModule value you wish to set
 	 */
-	void setClassStudents(final Set<ClassStudent> classStudent);
+	void setClassroomModules(final Set<ClassroomModule> classroomModule);
 
     /**
-     * Return the value associated with the column: classSubject.
-	 * @return A Set&lt;ClassSubject&gt; object (this.classSubject)
+     * Return the value associated with the column: classroomStudent.
+	 * @return A Set&lt;ClassroomStudent&gt; object (this.classroomStudent)
 	 */
-	Set<ClassSubject> getClassSubjects();
+	Set<ClassroomStudent> getClassroomStudents();
 	
 	/**
-	 * Adds a bi-directional link of type ClassSubject to the classSubjects set.
-	 * @param classSubject item to add
+	 * Adds a bi-directional link of type ClassroomStudent to the classroomStudents set.
+	 * @param classroomStudent item to add
 	 */
-	void addClassSubject(ClassSubject classSubject);
+	void addClassroomStudent(ClassroomStudent classroomStudent);
 
   
     /**  
-     * Set the value related to the column: classSubject.
-	 * @param classSubject the classSubject value you wish to set
+     * Set the value related to the column: classroomStudent.
+	 * @param classroomStudent the classroomStudent value you wish to set
 	 */
-	void setClassSubjects(final Set<ClassSubject> classSubject);
+	void setClassroomStudents(final Set<ClassroomStudent> classroomStudent);
 
     /**
-     * Return the value associated with the column: division.
-	 * @return A String object (this.division)
+     * Return the value associated with the column: divisionIddivision.
+	 * @return A Division object (this.divisionIddivision)
 	 */
-	String getDivision();
+	Division getDivisionIddivision();
 	
 
   
     /**  
-     * Set the value related to the column: division.
-	 * @param division the division value you wish to set
+     * Set the value related to the column: divisionIddivision.
+	 * @param divisionIddivision the divisionIddivision value you wish to set
 	 */
-	void setDivision(final String division);
+	void setDivisionIddivision(final Division divisionIddivision);
 
     /**
-     * Return the value associated with the column: grade.
-	 * @return A Integer object (this.grade)
+     * Return the value associated with the column: gradeIdgrade.
+	 * @return A Grade object (this.gradeIdgrade)
 	 */
-	Integer getGrade();
+	Grade getGradeIdgrade();
 	
 
   
     /**  
-     * Set the value related to the column: grade.
-	 * @param grade the grade value you wish to set
+     * Set the value related to the column: gradeIdgrade.
+	 * @param gradeIdgrade the gradeIdgrade value you wish to set
 	 */
-	void setGrade(final Integer grade);
+	void setGradeIdgrade(final Grade gradeIdgrade);
 
     /**
      * Return the value associated with the column: id.
@@ -114,6 +116,20 @@ public interface IClassroom {
 	 * @param id the id value you wish to set
 	 */
 	void setId(final Integer id);
+
+    /**
+     * Return the value associated with the column: modifiedTime.
+	 * @return A Date object (this.modifiedTime)
+	 */
+	Date getModifiedTime();
+	
+
+  
+    /**  
+     * Set the value related to the column: modifiedTime.
+	 * @param modifiedTime the modifiedTime value you wish to set
+	 */
+	void setModifiedTime(final Date modifiedTime);
 
     /**
      * Return the value associated with the column: sectionIdsection.
@@ -131,9 +147,9 @@ public interface IClassroom {
 
     /**
      * Return the value associated with the column: year.
-	 * @return A Date object (this.year)
+	 * @return A Integer object (this.year)
 	 */
-	Date getYear();
+	Integer getYear();
 	
 
   
@@ -141,7 +157,7 @@ public interface IClassroom {
      * Set the value related to the column: year.
 	 * @param year the year value you wish to set
 	 */
-	void setYear(final Date year);
+	void setYear(final Integer year);
 
 	// end of interface
 }
